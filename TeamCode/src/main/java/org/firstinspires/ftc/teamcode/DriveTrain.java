@@ -77,7 +77,7 @@ public class DriveTrain implements Constants{
         deltaGreenPos = -(lastGreenPos - greenMotor.getCurrentPosition());
         deltaYellowPos = -(lastYellowPos - yellowMotor.getCurrentPosition());
 
-        double slope = ((deltaGreenPos - deltaRedPos) * ODO_TICKS_TO_IN) / ODO_SPACING;
+        double slope = ((deltaGreenPos + deltaRedPos) * ODO_TICKS_TO_IN) / ODO_SPACING;
 
         heading += slope * SLOPE_TO_HEADING;
     }

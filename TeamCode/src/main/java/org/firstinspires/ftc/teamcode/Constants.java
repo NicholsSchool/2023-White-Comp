@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 public interface Constants{
 
-    public static final double TURN_LIMITER = 1;
+    public static final double TURN_LIMITER = 0.5;
 
-    public static final double DRIVE_LIMITER = 1;
+    public static final double DRIVE_LIMITER = 0.5;
 
     public static final double ARM_LIMITER = 0.5;
 
