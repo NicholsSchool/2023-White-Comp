@@ -43,6 +43,11 @@ public class DriveTrain implements Constants{
         blueMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         redMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        yellowMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        greenMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        blueMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        redMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         
     }
 
@@ -63,13 +68,6 @@ public class DriveTrain implements Constants{
         return yellowMotor.getCurrentPosition();
     }
 
-    public void update(){
-        lastRedPos = getRedPosition();
-        lastBluePos = getBluePosition();
-        lastGreenPos = getGreenPosition();
-        lastYellowPos = getRedPosition();
-    }
-
     public void calcHeading() {
 
         deltaRedPos = -(lastRedPos - redMotor.getCurrentPosition());
@@ -77,13 +75,18 @@ public class DriveTrain implements Constants{
         deltaGreenPos = -(lastGreenPos - greenMotor.getCurrentPosition());
         deltaYellowPos = -(lastYellowPos - yellowMotor.getCurrentPosition());
 
-        double slope = ((deltaGreenPos + deltaRedPos) * ODO_TICKS_TO_IN) / ODO_SPACING;
+        double slope = ((deltaGreenPos - deltaRedPos) * ODO_TICKS_TO_IN) / ODO_SPACING;
 
         heading += slope * SLOPE_TO_HEADING;
+
+        lastRedPos = getRedPosition();
+        lastBluePos = getBluePosition();
+        lastGreenPos = getGreenPosition();
+        lastYellowPos = getRedPosition();
     }
     
-    public double getHeading() {
-        return heading % (2 * Math.PI);
+    public double getHeading(){
+        return heading % Math.PI;
     }
     
     //orientation
@@ -93,15 +96,21 @@ public class DriveTrain implements Constants{
 
 
     public void drive(double angle, double power, double turn, boolean highGear){
-        double redPower = power * Math.sin(angle + getHeading()) - turn;
-        double greenPower = power * Math.sin(angle + getHeading()) + turn;
-        double yellowPower = power * Math.cos(angle + getHeading()) - turn;
-        double bluePower = power * Math.cos(angle + getHeading()) + turn;
-
-        redMotor.setPower(redPower);
-        greenMotor.setPower(greenPower);
-        yellowMotor.setPower(yellowPower);
-        blueMotor.setPower(bluePower);
+        double redPower = power * Math.sin(angle - getHeading()) - turn;
+        double greenPower = power * Math.sin(angle - getHeading()) + turn;
+        double yellowPower = -power * Math.cos(angle - getHeading()) - turn;
+        double bluePower = -power * Math.cos(angle - getHeading()) + turn;
+        if(highGear){
+            redMotor.setPower(redPower);
+            greenMotor.setPower(greenPower);
+            yellowMotor.setPower(yellowPower);
+            blueMotor.setPower(bluePower);
+        } else {
+            redMotor.setPower(0.5 * redPower);
+            greenMotor.setPower(0.5 * greenPower);
+            yellowMotor.setPower(0.5 * yellowPower);
+            blueMotor.setPower(0.5 * bluePower);
+        }
     }   
         
 }

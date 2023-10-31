@@ -52,13 +52,12 @@ public class Teleop extends OpMode implements Constants{
         }
 
         driver.calcHeading();
-        driver.update();
         
         telemetry.addData("red encoder value", driver.getRedPosition());
         telemetry.addData("green encoder value", driver.getGreenPosition());
         telemetry.addData("blue encoder value", driver.getBluePosition());
         telemetry.addData("yellow encoder value", driver.getYellowPosition());
-        telemetry.addData("heading", driver.getHeading());
+        telemetry.addData("heading", driver.getHeading() * 180 / Math.PI);
         telemetry.addData("power", drivePower);
 
     }
