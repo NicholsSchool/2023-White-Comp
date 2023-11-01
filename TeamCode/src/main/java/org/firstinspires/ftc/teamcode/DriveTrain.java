@@ -86,7 +86,15 @@ public class DriveTrain implements Constants{
     }
     
     public double getHeading(){
-        return heading % Math.PI;
+        double trueHeading;
+        double modHeading = heading % (2 * Math.PI);
+
+        if(Math.abs(modHeading) > Math.PI){
+            trueHeading = 2 * Math.PI - modHeading;
+        }else{
+            trueHeading = modHeading;
+        }
+        return trueHeading;
     }
     
     //orientation
