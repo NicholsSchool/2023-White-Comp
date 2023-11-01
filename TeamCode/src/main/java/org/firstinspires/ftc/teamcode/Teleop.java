@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+import com.qualcomm.robotcore.hardware.Gamepad.RumbleEffect;
 
 @TeleOp(name="White Robot", group="Iterative Opmode")
 public class Teleop extends OpMode implements Constants{
@@ -13,8 +13,11 @@ public class Teleop extends OpMode implements Constants{
 
     double driveAngle, drivePower, driveTurn;
     double armPower, armExtendPower;
-    double wristPower;
+    double wristPosition;
     boolean highGear = false;
+
+    RumbleEffect.Builder clampRumble = new RumbleEffect.Builder();
+    clampRumble.addStep(0.5, 0.5, 400);
     
     
     @Override
@@ -38,16 +41,25 @@ public class Teleop extends OpMode implements Constants{
 
         armPower = gamepad2.left_stick_y;
         armExtendPower = gamepad2.right_stick_y;
-        wristPower = gamepad2.left_trigger - gamepad2.right_trigger;
+
+        if(gamepad2.right_bumper) {
+            wristPosition = Constants.WRIST_POSITION;
+        } else if(gamepad2.left_bumper) {
+            wristPosition = - Constants.WRIST_POSITION;
+        } else {
+            wristPosition = 0;
+        }
 
         arm.rotateArm(armPower);
         arm.extendArm(armExtendPower);
-        hand.rotateWrist(wristPower);
 
-        if(gamepad1.a){
+        hand.wristToPosition(wristPosition);
+
+        if(gamepad1.b){
             hand.unclamp();
         }
-        if(gamepad1.b){
+        
+        if(gamepad1.a){
             hand.clamp();
         }
 

@@ -3,15 +3,16 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Arm{
+public class Arm {
     
     public DcMotor winch, leftArm, rightArm;
 
     HardwareMap hwMap = null;
+    Hand hand = new Hand();
 
     public void init( HardwareMap ahwMap ){
         // Save reference to Hardware map
-        HardwareMap hwMap = ahwMap;  
+        HardwareMap hwMap = ahwMap;
 
         winch  = hwMap.get(DcMotor.class, "winch");
         leftArm  = hwMap.get(DcMotor.class, "leftArm");
@@ -36,12 +37,10 @@ public class Arm{
 
     public void rotateArm(double power){
         
-        leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         leftArm.setPower(power);
         rightArm.setPower(power);
 
+        hand.setFourbar((leftArm.getCurrentPosition() + rightArm.getCurrentPosition()) / 2); 
     }
     
     public void extendArm(double power){
