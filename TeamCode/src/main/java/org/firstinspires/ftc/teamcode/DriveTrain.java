@@ -31,6 +31,11 @@ public class DriveTrain implements Constants{
         greenMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         blueMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         redMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        
+        yellowMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        greenMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        blueMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        redMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         
 
@@ -89,8 +94,10 @@ public class DriveTrain implements Constants{
         double trueHeading;
         double modHeading = heading % (2 * Math.PI);
 
-        if(Math.abs(modHeading) > Math.PI){
-            trueHeading = 2 * Math.PI - modHeading;
+        if(modHeading > Math.PI){
+            trueHeading = modHeading - 2 * Math.PI;
+        }else if (modHeading < -Math.PI){
+            trueHeading = modHeading + 2 * Math.PI;
         }else{
             trueHeading = modHeading;
         }
@@ -104,10 +111,10 @@ public class DriveTrain implements Constants{
 
 
     public void drive(double angle, double power, double turn, boolean highGear){
-        double redPower = power * Math.sin(angle - getHeading()) - turn;
-        double greenPower = power * Math.sin(angle - getHeading()) + turn;
-        double yellowPower = -power * Math.cos(angle - getHeading()) - turn;
-        double bluePower = -power * Math.cos(angle - getHeading()) + turn;
+        double redPower = power * Math.sin(angle + getHeading() + Constants.STARTING_ANGLE) - turn;
+        double greenPower = power * Math.sin(angle + getHeading() + Constants.STARTING_ANGLE) + turn;
+        double yellowPower = -power * Math.cos(angle + getHeading() + Constants.STARTING_ANGLE) - turn;
+        double bluePower = -power * Math.cos(angle + getHeading() + Constants.STARTING_ANGLE) + turn;
         if(highGear){
             redMotor.setPower(redPower);
             greenMotor.setPower(greenPower);
