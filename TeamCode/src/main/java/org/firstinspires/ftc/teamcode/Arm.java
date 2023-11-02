@@ -35,6 +35,14 @@ public class Arm {
         winch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     } 
 
+
+    /**
+     * 
+     * Rotates the arm with the specified power.
+     * Also rotates the virtual four bar motor to the inverse of the motor position.
+     * 
+     * @param power Speed at which to rotate the arm (for teleop)
+     */
     public void rotateArm(double power){
         
         leftArm.setPower(power);
@@ -43,6 +51,14 @@ public class Arm {
         hand.setFourbar((leftArm.getCurrentPosition() + rightArm.getCurrentPosition()) / 2); 
     }
     
+    /**
+     * 
+     * Extends the arm with the specified power.
+     * Uses the winch motor. Does not retract.
+     * 
+     * @param power The power at which to rotate the winch motor
+     */
+
     public void extendArm(double power){
         winch.setPower(power);
     }
