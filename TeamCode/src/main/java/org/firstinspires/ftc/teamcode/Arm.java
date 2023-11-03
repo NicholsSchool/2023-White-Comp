@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -40,7 +40,7 @@ public class Arm {
         leftArm.setPower(power);
         rightArm.setPower(power);
 
-        hand.setFourbar((leftArm.getCurrentPosition() + rightArm.getCurrentPosition()) / 2); 
+        // hand.setFourbar((leftArm.getCurrentPosition() + rightArm.getCurrentPosition()) / 2); 
     }
     
     public void extendArm(double power){

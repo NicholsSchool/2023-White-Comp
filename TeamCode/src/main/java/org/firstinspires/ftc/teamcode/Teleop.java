@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -15,9 +15,6 @@ public class Teleop extends OpMode implements Constants{
     double armPower, armExtendPower;
     double wristPosition;
     boolean highGear = false;
-
-    RumbleEffect.Builder clampRumble = new RumbleEffect.Builder();
-    clampRumble.addStep(0.5, 0.5, 400);
     
     
     @Override
@@ -41,25 +38,24 @@ public class Teleop extends OpMode implements Constants{
 
         armPower = gamepad2.left_stick_y;
         armExtendPower = gamepad2.right_stick_y;
-
-        if(gamepad2.right_bumper) {
-            wristPosition = Constants.WRIST_POSITION;
-        } else if(gamepad2.left_bumper) {
-            wristPosition = - Constants.WRIST_POSITION;
+        if(gamepad2.left_trigger > 0.5){
+            wristPosition = 0.7;
+        } else if (gamepad2.right_trigger > 0.5){
+            wristPosition = 0.3;
         } else {
-            wristPosition = 0;
+            wristPosition = Constants.WRIST_POSITION;
         }
+        
 
         arm.rotateArm(armPower);
         arm.extendArm(armExtendPower);
-
+        
         hand.wristToPosition(wristPosition);
 
-        if(gamepad1.b){
+        if(gamepad2.a){
             hand.unclamp();
         }
-        
-        if(gamepad1.a){
+        if(gamepad2.b){
             hand.clamp();
         }
 
