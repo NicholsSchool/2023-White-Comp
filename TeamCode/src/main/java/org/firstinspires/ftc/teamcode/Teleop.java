@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -16,7 +16,6 @@ public class Teleop extends OpMode implements Constants{
     double armPower, armExtendPower;
     double wristPosition;
     boolean highGear = false;
-
     RumbleEffect clampEffect = new RumbleEffect.Builder()
         .addStep(0.5, 0, 400)
         .addStep(0, 0, 200)
@@ -51,27 +50,27 @@ public class Teleop extends OpMode implements Constants{
 
         armPower = gamepad2.left_stick_y;
         armExtendPower = gamepad2.right_stick_y;
-
-        if(gamepad2.right_bumper) {
-            wristPosition = Constants.WRIST_POSITION;
-        } else if(gamepad2.left_bumper) {
-            wristPosition = - Constants.WRIST_POSITION;
+        if(gamepad2.left_trigger > 0.5){
+            wristPosition = 0.7;
+        } else if (gamepad2.right_trigger > 0.5){
+            wristPosition = 0.3;
         } else {
-            wristPosition = 0;
+            wristPosition = Constants.WRIST_POSITION;
         }
+        
 
         arm.rotateArm(armPower);
         arm.extendArm(armExtendPower);
-
+        
         hand.wristToPosition(wristPosition);
 
-        if(gamepad1.a){
+        if(gamepad2.b) {
             hand.clamp();
             gamepad1.runRumbleEffect(clampEffect); //Rumbles controller left to right (if applicable)
             gamepad1.setLedColor(0, 1, 0, 2000); //Sets LED to green for 2sec (if applicable)
         }
         
-        if(gamepad1.b){
+        if(gamepad2.a){
             hand.unclamp();
             gamepad1.runRumbleEffect(unClampEffect); //Rumbles controller right to left (if applicable)
             gamepad1.setLedColor(1, 0, 0, 1000); //Sets LED to red for 1sec (if applicable)

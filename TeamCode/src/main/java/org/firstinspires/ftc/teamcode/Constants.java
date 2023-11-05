@@ -26,12 +26,11 @@ public interface Constants{
     
     public static final double STARTING_ANGLE = -3 * Math.PI / 4;
 
-    public static final double SERVO_CLOSED = 0.1;
+    public static final double SERVO_CLOSED = 0.9;
 
-    public static final double SERVO_OPENED = 0.9;
+    public static final double SERVO_OPENED = 1;
 
     public static final int ARM_DOWN_POSITION = 0;
 
-    public static final double WRIST_POSITION = 0.4;
-
+    public static final double WRIST_POSITION = 0.5;
 }
