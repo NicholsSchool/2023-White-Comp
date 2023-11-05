@@ -40,11 +40,17 @@ public class Hand implements Constants{
         wrist.setPosition(position);
     }
 
+    /**
+     * Clamp the pincers of the hand
+    */
     public void clamp(){
-        leftClamp.setPosition(Constants.SERVO_CLOSED);
-        rightClamp.setPosition(1 - Constants.SERVO_CLOSED);
+        leftClamp.setPosition(SERVO_CLOSED);
+        rightClamp.setPosition(1 - SERVO_CLOSED);
     }
 
+    /**
+     * Unclamp the pincers of the hand
+     */
     public void unclamp(){
         leftClamp.setPosition(SERVO_OPENED);
         rightClamp.setPosition(1 - SERVO_OPENED);

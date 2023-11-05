@@ -37,10 +37,11 @@ public class DriveTrain implements Constants{
         blueMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         redMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        
-
     } 
 
+    /**
+     * Resets the odometry encoders and then sets the motors to RUN_WITHOUT_ENCODER
+     */
     public void resetEncoder(){
         
         yellowMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -52,27 +53,48 @@ public class DriveTrain implements Constants{
         greenMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         blueMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         redMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
         
     }
 
-
+    /**
+     * Absolute encoder value of the RED encoder.
+     * 
+     * @return The current position of the RED encoder.
+     */
     public int getRedPosition(){
         return redMotor.getCurrentPosition();
     }
-    
+    /**
+     * Absolute encoder value of the BLUE encoder.
+     * 
+     * @return The current position of the BLUE encoder.
+     */
     public int getBluePosition(){
         return blueMotor.getCurrentPosition();
     }
 
+    /**
+     * Absolute encoder value of the GREEN encoder.
+     * 
+     * @return The current position of the GREEN encoder.
+     */
     public int getGreenPosition(){
         return greenMotor.getCurrentPosition();
     }
 
+    /**
+     * Absolute encoder value of the YELLOW encoder.
+     * 
+     * @return The current position of the YELLOW encoder.
+     */
     public int getYellowPosition(){
         return yellowMotor.getCurrentPosition();
     }
 
+
+    /**
+     *  Calculates the heading of the robot using odometry. Should be called every loop.
+     */
     public void calcHeading() {
 
         deltaRedPos = -(lastRedPos - redMotor.getCurrentPosition());
@@ -89,7 +111,13 @@ public class DriveTrain implements Constants{
         lastGreenPos = getGreenPosition();
         lastYellowPos = getRedPosition();
     }
-    
+
+    /**
+     * 
+     * A method to get the heading of the robot relative to the initial heading using odometry.
+     * 
+     * @return The current heading of the robot.
+     */    
     public double getHeading(){
         double trueHeading;
         double modHeading = heading % (2 * Math.PI);
@@ -109,7 +137,17 @@ public class DriveTrain implements Constants{
     //G-----R
     //   B    
 
-
+    /**
+     * 
+     * Moves the robot drivetrain using PowerAngle.
+     * This function is for teleop control. It is field oriented with odometry.
+     * 
+     * @param angle The angle at which to turn the robot. Should be in radians.
+     * @param power The power (0-1) at which the robot moves.
+     * @param turn The power (0-1) at which the robot should rotate
+     * @param highGear Whether or not the robot should be in high gear (full power or half)
+     * 
+     */
     public void drive(double angle, double power, double turn, boolean highGear){
         double redPower = power * Math.sin(angle + getHeading() + Constants.STARTING_ANGLE) - turn;
         double greenPower = power * Math.sin(angle + getHeading() + Constants.STARTING_ANGLE) + turn;

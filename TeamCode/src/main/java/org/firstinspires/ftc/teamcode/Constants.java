@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot;
+package org.firstinspires.ftc.teamcode;
 
 public interface Constants{
 
@@ -20,7 +20,7 @@ public interface Constants{
 
     public static final double ODO_SPACING = 13;
 
-    public static final double ODO_TICKS_TO_IN = 0.00185 * 1.273; //inches per tick, should be less than 1
+    public static final double ODO_TICKS_TO_IN = 0.00185 * 1.273; //inches per tick
 
     public static final double SLOPE_TO_HEADING = -Math.PI / 4;
     
@@ -34,4 +34,3 @@ public interface Constants{
 
     public static final double WRIST_POSITION = 0.5;
 }
-    

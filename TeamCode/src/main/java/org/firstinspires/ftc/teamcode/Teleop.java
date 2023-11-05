@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Gamepad.RumbleEffect;
 
 @TeleOp(name="White Robot", group="Iterative Opmode")
@@ -15,6 +16,17 @@ public class Teleop extends OpMode implements Constants{
     double armPower, armExtendPower;
     double wristPosition;
     boolean highGear = false;
+    RumbleEffect clampEffect = new RumbleEffect.Builder()
+        .addStep(0.5, 0, 400)
+        .addStep(0, 0, 200)
+        .addStep(0, 0.5, 400)
+        .build();
+    
+    RumbleEffect unClampEffect = new RumbleEffect.Builder()
+        .addStep(0, 0.5, 400)
+        .addStep(0, 0, 200)
+        .addStep(0.5, 0, 400)
+        .build();
     
     
     @Override
@@ -52,11 +64,16 @@ public class Teleop extends OpMode implements Constants{
         
         hand.wristToPosition(wristPosition);
 
+        if(gamepad2.b) {
+            hand.clamp();
+            gamepad1.runRumbleEffect(clampEffect); //Rumbles controller left to right (if applicable)
+            gamepad1.setLedColor(0, 1, 0, 2000); //Sets LED to green for 2sec (if applicable)
+        }
+        
         if(gamepad2.a){
             hand.unclamp();
-        }
-        if(gamepad2.b){
-            hand.clamp();
+            gamepad1.runRumbleEffect(unClampEffect); //Rumbles controller right to left (if applicable)
+            gamepad1.setLedColor(1, 0, 0, 1000); //Sets LED to red for 1sec (if applicable)
         }
 
         driver.calcHeading();
