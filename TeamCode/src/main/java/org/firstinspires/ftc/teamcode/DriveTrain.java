@@ -200,6 +200,12 @@ public class DriveTrain implements Constants{
             yellowMotor.setPower(0.5 * yellowPower);
             blueMotor.setPower(0.5 * bluePower);
         }
-    }   
+    } 
+
+    public void linearGoToPos(double x, double y) {
+        double angle = Math.atan((this.y - y) / (this.x - x));
+        double distance = Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
+        //TODO: add power using PIDF
+    }
         
 }
