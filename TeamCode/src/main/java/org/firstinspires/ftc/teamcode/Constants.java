@@ -18,9 +18,9 @@ public interface Constants{
 
     public static final double LOW_GEAR = 0.5;
 
-    public static final double ODO_SPACING = 13;
+    public static final double ODO_SPACING = 13 / 1.273;
 
-    public static final double ODO_TICKS_TO_IN = 0.00185 * 1.273; //inches per tick
+    public static final double ODO_TICKS_TO_IN = 0.00185; //inches per tick
 
     public static final double SLOPE_TO_HEADING = -Math.PI / 4;
     

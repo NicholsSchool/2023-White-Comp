@@ -8,6 +8,7 @@ public class DriveTrain implements Constants{
     
     public DcMotor redMotor, blueMotor, greenMotor, yellowMotor;
     
+    private double x, y;
     private double heading = 0;
     private int lastRedPos, lastBluePos, lastGreenPos, lastYellowPos;
     private int deltaRedPos, deltaBluePos, deltaGreenPos, deltaYellowPos;
@@ -91,17 +92,38 @@ public class DriveTrain implements Constants{
         return yellowMotor.getCurrentPosition();
     }
 
-
     /**
-     *  Calculates the heading of the robot using odometry. Should be called every loop.
+     * Calculates how far the odometry wheels have moved since last loop
      */
-    public void calcHeading() {
-
+    private void calcDeltas(){
         deltaRedPos = -(lastRedPos - redMotor.getCurrentPosition());
         deltaBluePos = -(lastBluePos - blueMotor.getCurrentPosition());
         deltaGreenPos = -(lastGreenPos - greenMotor.getCurrentPosition());
         deltaYellowPos = -(lastYellowPos - yellowMotor.getCurrentPosition());
+    }
+    
+    /**
+     *  Updates the position of the robot using odometry.
+     */
+    private void calcPos() {
+        
+        double leftDiag = ( deltaYellowPos + deltaBluePos ) / 2;
+        double rightDiag = ( deltaGreenPos + deltaYellowPos ) / 2;
+        
+        double deltaXTicks = ( Math.cos(angle + Math.PI / 4 ) * leftDiag + 
+               Math.cos(angle - Math.PI / 4 ) * rightDiag ) / 2;
+        double deltaYTicks = ( Math.sin(angle + Math.PI / 4 ) * leftDiag + 
+               Math.sin(angle - Math.PI / 4 ) * rightDiag ) / 2;
 
+        x += deltaXTicks * ODO_TICKS_TO_IN;
+        y += deltaYTicks * ODO_TICKS_TO_IN;
+
+    }
+
+    /**
+     *  Calculates the heading of the robot using odometry.
+     */
+    private void calcHeading() {
         double slope = ((deltaGreenPos - deltaRedPos) * ODO_TICKS_TO_IN) / ODO_SPACING;
 
         heading += slope * SLOPE_TO_HEADING;
@@ -110,6 +132,12 @@ public class DriveTrain implements Constants{
         lastBluePos = getBluePosition();
         lastGreenPos = getGreenPosition();
         lastYellowPos = getRedPosition();
+    }
+
+    public void update() {
+        calcDeltas(); //First, we update the deltas for the odometry encoders.
+        calcPos(); //Then, we use the deltas to update the robot's position.
+        calcHeading(); //Finally, we use the deltas to calculate the robot's heading in radians.
     }
 
     /**
@@ -130,6 +158,14 @@ public class DriveTrain implements Constants{
             trueHeading = modHeading;
         }
         return trueHeading;
+    }
+
+    public double[] getPosition() {
+        
+        double[] positionArray = {x, y};
+
+        return positionArray;
+
     }
     
     //orientation

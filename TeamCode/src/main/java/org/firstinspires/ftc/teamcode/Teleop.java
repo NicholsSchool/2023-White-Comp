@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad.RumbleEffect;
 @TeleOp(name="White Robot", group="Iterative Opmode")
 public class Teleop extends OpMode implements Constants{
     
-    private DriveTrain driver = new DriveTrain();
+    private DriveTrain driver = new DriveTrain(0,0);
     private Arm arm = new Arm();
     private Hand hand = new Hand();
 
@@ -39,7 +39,9 @@ public class Teleop extends OpMode implements Constants{
 
     @Override
     public void loop() {
-    
+        
+        driver.update();
+
          //set up power angle
         driveAngle = Math.atan2(gamepad1.left_stick_y,gamepad1.left_stick_x);
         drivePower = Math.pow(Math.pow(gamepad1.left_stick_x,2) + Math.pow(gamepad1.left_stick_y,2),0.5); 
@@ -75,15 +77,13 @@ public class Teleop extends OpMode implements Constants{
             gamepad1.runRumbleEffect(unClampEffect); //Rumbles controller right to left (if applicable)
             gamepad1.setLedColor(1, 0, 0, 1000); //Sets LED to red for 1sec (if applicable)
         }
-
-        driver.calcHeading();
         
-        telemetry.addData("red encoder value", driver.getRedPosition());
-        telemetry.addData("green encoder value", driver.getGreenPosition());
-        telemetry.addData("blue encoder value", driver.getBluePosition());
-        telemetry.addData("yellow encoder value", driver.getYellowPosition());
-        telemetry.addData("heading", driver.getHeading() * 180 / Math.PI);
-        telemetry.addData("power", drivePower);
+        double[] encVals = {driver.getRedPosition(), driver.getGreenPosition(), driver.getBluePosition(), driver.getYellowPosition()};
+
+        telemetry.addData("> RGBY ENCODER VALUES", encVals) ;
+        telemetry.addData("> HEADING", driver.getHeading() * 180 / Math.PI);
+        telemetry.addData("> POWER", drivePower);
+        telemetry.addData("> POSITION", driver.getPosition());
 
     }
 
