@@ -14,6 +14,11 @@ public class DriveTrain implements Constants{
     private int deltaRedPos, deltaBluePos, deltaGreenPos, deltaYellowPos;
     HardwareMap hwMap = null;
 
+    public DriveTrain(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public void init( HardwareMap ahwMap ){
         
         HardwareMap hwMap = ahwMap;
@@ -95,50 +100,50 @@ public class DriveTrain implements Constants{
     /**
      * Calculates how far the odometry wheels have moved since last loop
      */
-    private void calcDeltas(){
-        deltaRedPos = -(lastRedPos - redMotor.getCurrentPosition());
-        deltaBluePos = -(lastBluePos - blueMotor.getCurrentPosition());
-        deltaGreenPos = -(lastGreenPos - greenMotor.getCurrentPosition());
-        deltaYellowPos = -(lastYellowPos - yellowMotor.getCurrentPosition());
-    }
+    // private void calcDeltas(){
+    //     deltaRedPos = -(lastRedPos - redMotor.getCurrentPosition());
+    //     deltaBluePos = -(lastBluePos - blueMotor.getCurrentPosition());
+    //     deltaGreenPos = -(lastGreenPos - greenMotor.getCurrentPosition());
+    //     deltaYellowPos = -(lastYellowPos - yellowMotor.getCurrentPosition());
+    // }
     
     /**
      *  Updates the position of the robot using odometry.
      */
-    private void calcPos() {
+    // private void calcPos() {
         
-        double leftDiag = ( deltaYellowPos + deltaBluePos ) / 2;
-        double rightDiag = ( deltaGreenPos + deltaYellowPos ) / 2;
+    //     double leftDiag = ( deltaYellowPos + deltaBluePos ) / 2;
+    //     double rightDiag = ( deltaGreenPos + deltaYellowPos ) / 2;
         
-        double deltaXTicks = ( Math.cos(angle + Math.PI / 4 ) * leftDiag + 
-               Math.cos(angle - Math.PI / 4 ) * rightDiag ) / 2;
-        double deltaYTicks = ( Math.sin(angle + Math.PI / 4 ) * leftDiag + 
-               Math.sin(angle - Math.PI / 4 ) * rightDiag ) / 2;
+    //     double deltaXTicks = ( Math.cos(angle + Math.PI / 4 ) * leftDiag + 
+    //            Math.cos(angle - Math.PI / 4 ) * rightDiag ) / 2;
+    //     double deltaYTicks = ( Math.sin(angle + Math.PI / 4 ) * leftDiag + 
+    //            Math.sin(angle - Math.PI / 4 ) * rightDiag ) / 2;
 
-        x += deltaXTicks * ODO_TICKS_TO_IN;
-        y += deltaYTicks * ODO_TICKS_TO_IN;
+    //     x += deltaXTicks * ODO_TICKS_TO_IN;
+    //     y += deltaYTicks * ODO_TICKS_TO_IN;
 
-    }
+    // }
 
     /**
      *  Calculates the heading of the robot using odometry.
      */
-    private void calcHeading() {
-        double slope = ((deltaGreenPos - deltaRedPos) * ODO_TICKS_TO_IN) / ODO_SPACING;
+    // private void calcHeading() {
+    //     double slope = ((deltaGreenPos - deltaRedPos) * ODO_TICKS_TO_IN) / ODO_SPACING;
 
-        heading += slope * SLOPE_TO_HEADING;
+    //     heading += slope * SLOPE_TO_HEADING;
 
-        lastRedPos = getRedPosition();
-        lastBluePos = getBluePosition();
-        lastGreenPos = getGreenPosition();
-        lastYellowPos = getRedPosition();
-    }
+    //     lastRedPos = getRedPosition();
+    //     lastBluePos = getBluePosition();
+    //     lastGreenPos = getGreenPosition();
+    //     lastYellowPos = getRedPosition();
+    // }
 
-    public void update() {
-        calcDeltas(); //First, we update the deltas for the odometry encoders.
-        calcPos(); //Then, we use the deltas to update the robot's position.
-        calcHeading(); //Finally, we use the deltas to calculate the robot's heading in radians.
-    }
+    // public void update() {
+    //     calcDeltas(); //First, we update the deltas for the odometry encoders.
+    //     calcPos(); //Then, we use the deltas to update the robot's position.
+    //     calcHeading(); //Finally, we use the deltas to calculate the robot's heading in radians.
+    // }
 
     /**
      * 
@@ -202,10 +207,10 @@ public class DriveTrain implements Constants{
         }
     } 
 
-    public void linearGoToPos(double x, double y) {
-        double angle = Math.atan((this.y - y) / (this.x - x));
-        double distance = Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
-        //TODO: add power using PIDF
-    }
+    // public void linearGoToPos(double x, double y) {
+    //     double angle = Math.atan((this.y - y) / (this.x - x));
+    //     double distance = Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
+    //     //TODO: add power using PIDF
+    // }
         
 }

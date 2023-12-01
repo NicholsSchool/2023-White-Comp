@@ -40,7 +40,7 @@ public class Teleop extends OpMode implements Constants{
     @Override
     public void loop() {
         
-        driver.update();
+        //driver.update();
 
          //set up power angle
         driveAngle = Math.atan2(gamepad1.left_stick_y,gamepad1.left_stick_x);
