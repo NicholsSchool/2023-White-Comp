@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode.teleops;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+
 import org.firstinspires.ftc.teamcode.robot.RobotContainer;
 import org.firstinspires.ftc.teamcode.utils.Constants;
 

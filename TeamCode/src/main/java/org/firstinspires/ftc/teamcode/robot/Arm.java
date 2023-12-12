@@ -43,7 +43,7 @@ public class Arm implements Constants{
 
     }
 
-    public void move(double power){
+    public void setPower(double power){
         leftArm.setPower(- ARM_CONSTANT * power);
         rightArm.setPower(- ARM_CONSTANT * power);
 
@@ -56,6 +56,11 @@ public class Arm implements Constants{
     public int armPos(){
         return rightArm.getCurrentPosition();
     }
+
+    public int fourBarPos() {
+        return fourbar.getCurrentPosition();
+    }
+
     public void extend(double power){
         winch.setPower(-power);
     }

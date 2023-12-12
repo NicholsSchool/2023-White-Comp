@@ -46,6 +46,10 @@ public class RobotContainer implements Constants {
         this.planeLaunch = planeLaunch;
     }
 
+    public int getArmPos() {
+        return arm.armPos();
+    }
+
     public void updateInstances() {
         driverOI.updateValues();
         operatorOI.updateValues();
@@ -65,9 +69,7 @@ public class RobotContainer implements Constants {
         highGear = (driverOI.right_trigger.get() > 0.5) ? true : false;
             drivetrain.drive(power, angle, turn, highGear);
 
-
-
-        arm.move(armPower);
+        arm.setPower(armPower);
         arm.extend(-extendPower);
 
         if(operatorOI.a.wasJustReleased()){
@@ -77,6 +79,8 @@ public class RobotContainer implements Constants {
 
         if(operatorOI.dpad_up.get()){
             planeLaunch = true;
+        } else {
+            planeLaunch = false;
         }
 
         arm.setPlane(planeLaunch);

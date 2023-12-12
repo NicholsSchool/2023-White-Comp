@@ -7,8 +7,8 @@ public interface Constants {
     double ODOMETRY_HEADING_CORRECTOR = 1;
     double ODOMETRY_X_CORRECTOR = 1;
     double ODOMETRY_Y_CORRECTOR = 1;
-    double LOW_GEAR = 0.7;
-    double HIGH_GEAR = 0.9;
+    double LOW_GEAR = 0.5;
+    double HIGH_GEAR = 0.7;
     double DEFAULT_DEADBAND = 0;
     double LOOPS_TO_WAIT = 0;
     double FOURBAR_CONSTANT = 1;
