@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.teamcode.utils.*;
 public class Arm implements Constants{
     public DcMotorEx leftArm, rightArm, fourbar, winch;
+    public Servo plane;
 
     HardwareMap hwMap;
 
@@ -16,6 +20,7 @@ public class Arm implements Constants{
         rightArm = hwMap.get(DcMotorEx.class, "rightArm");
         fourbar = hwMap.get(DcMotorEx.class, "fourbar");
         winch = hwMap.get(DcMotorEx.class, "winch");
+        plane = hwMap.get(Servo.class, "planeServo");
 
         leftArm.setDirection(DcMotorEx.Direction.FORWARD);
         rightArm.setDirection(DcMotorEx.Direction.FORWARD);
@@ -27,7 +32,6 @@ public class Arm implements Constants{
         fourbar.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         winch.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
-        fourbar.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         winch.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
@@ -40,8 +44,8 @@ public class Arm implements Constants{
     }
 
     public void move(double power){
-        leftArm.setPower(-power);
-        rightArm.setPower(-power);
+        leftArm.setPower(- ARM_CONSTANT * power);
+        rightArm.setPower(- ARM_CONSTANT * power);
 
 //        fourbar.setTargetPosition((int)(armPos() * FOURBAR_CONSTANT));
 //        fourbar.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -54,6 +58,10 @@ public class Arm implements Constants{
     }
     public void extend(double power){
         winch.setPower(-power);
+    }
+
+    public void setPlane(boolean launchPlane){
+        plane.setPosition(launchPlane ? LAUNCH_POSITION : HELD_POSITION);
     }
 
 }

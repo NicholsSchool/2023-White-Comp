@@ -17,6 +17,7 @@ public class RobotContainer implements Constants {
     double armPower, extendPower;
     boolean highGear;
     boolean clamped;
+    boolean planeLaunch;
 
     public double angleForTelemetry;
 
@@ -30,7 +31,7 @@ public class RobotContainer implements Constants {
      * @param g1 gamepad1
      * @param g2 gamepad2
      */
-    public void init(HardwareMap hwMap, double heading, double[] coordinates, boolean clamped, double wristPos, Gamepad g1, Gamepad g2){
+    public RobotContainer (HardwareMap hwMap, double heading, double[] coordinates, boolean clamped, double wristPos, boolean planeLaunch, Gamepad g1, Gamepad g2){
         drivetrain = new DriveTrain(hwMap, heading, coordinates);
         hand = new Hand(hwMap, clamped, wristPos);
         arm = new Arm(hwMap);
@@ -42,6 +43,7 @@ public class RobotContainer implements Constants {
         highGear = false;
         driverOI = new GameController(g1);
         operatorOI = new GameController(g2);
+        this.planeLaunch = planeLaunch;
     }
 
     public void updateInstances() {
@@ -61,8 +63,10 @@ public class RobotContainer implements Constants {
         extendPower = operatorOI.right_stick_y.get();
 
         highGear = (driverOI.right_trigger.get() > 0.5) ? true : false;
+            drivetrain.drive(power, angle, turn, highGear);
 
-        drivetrain.drive(power, angle, turn, highGear);
+
+
         arm.move(armPower);
         arm.extend(-extendPower);
 
@@ -70,6 +74,12 @@ public class RobotContainer implements Constants {
             clamped = !clamped;
         }
         hand.clamp(clamped);
+
+        if(operatorOI.dpad_up.get()){
+            planeLaunch = true;
+        }
+
+        arm.setPlane(planeLaunch);
 
         if(operatorOI.left_trigger.get() > 0.5){
             hand.wristToPos(WRIST_RIGHT);

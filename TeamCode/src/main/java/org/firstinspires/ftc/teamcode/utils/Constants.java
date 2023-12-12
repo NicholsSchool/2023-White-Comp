@@ -13,11 +13,14 @@ public interface Constants {
     double LOOPS_TO_WAIT = 0;
     double FOURBAR_CONSTANT = 1;
     double FOURBAR_POWER = 0.1;
-    double LEFT_CLAMP = 0.5;
-    double RIGHT_CLAMP = 0.05;
-    double LEFT_UNCLAMPED = 0.7;
+    double LEFT_CLAMP = 0;
+    double RIGHT_CLAMP = 0.;
+    double LEFT_UNCLAMPED = 0.3;
     double RIGHT_UNCLAMPED = 0;
     double WRIST_LEFT = 0.25;
     double WRIST_RIGHT = 0.75;
     double WRIST_DEFAULT = 0.5;
+    double ARM_CONSTANT = 0.4;
+    double LAUNCH_POSITION = 0;
+    double HELD_POSITION = 0.7;
 }
