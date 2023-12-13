@@ -11,7 +11,6 @@ public class RobotContainer implements Constants {
     private Hand hand;
     private GameController driverOI;
     private GameController operatorOI;
-    private double heading;
     double[] coordinates;
     double power, angle, turn;
     double armPower, extendPower;
