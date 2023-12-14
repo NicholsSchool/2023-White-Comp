@@ -30,9 +30,9 @@ public class RobotContainer implements Constants {
      * @param g1 gamepad1
      * @param g2 gamepad2
      */
-    public RobotContainer (HardwareMap hwMap, double heading, double[] coordinates, boolean clamped, double wristPos, boolean planeLaunch, Gamepad g1, Gamepad g2){
+    public RobotContainer (HardwareMap hwMap, double heading, double[] coordinates, boolean clamped, boolean planeLaunch, Gamepad g1, Gamepad g2){
         drivetrain = new DriveTrain(hwMap, heading, coordinates);
-        hand = new Hand(hwMap, clamped, wristPos);
+        hand = new Hand(hwMap, clamped);
         arm = new Arm(hwMap);
         power = 0.0;
         angle = 0.0;
@@ -83,14 +83,6 @@ public class RobotContainer implements Constants {
         }
 
         arm.setPlane(planeLaunch);
-
-        if(operatorOI.left_trigger.get() > 0.5){
-            hand.wristToPos(WRIST_RIGHT);
-        } else if (operatorOI.right_trigger.get() > 0.5){
-            hand.wristToPos(Constants.WRIST_LEFT);
-        }else{
-            hand.wristToPos(WRIST_DEFAULT);
-        }
     }
 
 

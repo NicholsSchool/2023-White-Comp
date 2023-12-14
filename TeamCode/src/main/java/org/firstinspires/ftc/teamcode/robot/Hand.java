@@ -12,23 +12,18 @@ public class Hand implements Constants {
     public boolean clamped;
     public double wristPos;
 
-    public Hand(HardwareMap ahwMap, boolean clamped, double wristPos){
+    public Hand(HardwareMap ahwMap, boolean clamped){
 
         hwMap = ahwMap;
 
         leftClamp = hwMap.get(Servo.class,"leftClamp");
         rightClamp = hwMap.get(Servo.class,"rightClamp");
-        wrist = hwMap.get(Servo.class,"wrist");
     }
 
     public void clamp(boolean clamped){
         leftClamp.setPosition(clamped ? LEFT_CLAMP : LEFT_UNCLAMPED);
         rightClamp.setPosition(clamped ? RIGHT_CLAMP : RIGHT_UNCLAMPED);
 
-    }
-
-    public void wristToPos(double pos){
-        wrist.setPosition(pos);
     }
 
 }

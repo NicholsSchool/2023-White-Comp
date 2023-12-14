@@ -11,7 +11,7 @@ public class Arm implements Constants{
 
     HardwareMap hwMap;
 
-    public Arm(HardwareMap ahwMap){
+    public Arm(HardwareMap ahwMap) {
 
         hwMap = ahwMap;
 
@@ -42,17 +42,17 @@ public class Arm implements Constants{
 
     }
 
-    public void setPower(double power){
+    public void setPower(double power) {
         leftArm.setPower(- ARM_CONSTANT * power);
         rightArm.setPower(- ARM_CONSTANT * power);
 
-//        fourbar.setTargetPosition((int)(armPos() * FOURBAR_CONSTANT));
-//        fourbar.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//        fourbar.setPower(FOURBAR_POWER);
+        fourbar.setTargetPosition((int)(armPos() * FOURBAR_CONSTANT));
+        fourbar.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        fourbar.setPower(FOURBAR_POWER);
 
     }
 
-    public int armPos(){
+    public int armPos() {
         return rightArm.getCurrentPosition();
     }
 
@@ -60,11 +60,11 @@ public class Arm implements Constants{
         return fourbar.getCurrentPosition();
     }
 
-    public void extend(double power){
+    public void extend(double power) {
         winch.setPower(-power);
     }
 
-    public void setPlane(boolean launchPlane){
+    public void setPlane(boolean launchPlane) {
         plane.setPosition(launchPlane ? LAUNCH_POSITION : HELD_POSITION);
     }
 
