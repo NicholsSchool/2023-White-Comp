@@ -13,8 +13,6 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-//TODO: exposure tuning? (srcpy)
-
 /**
  * The Vision Subsystem of the Robot
  */

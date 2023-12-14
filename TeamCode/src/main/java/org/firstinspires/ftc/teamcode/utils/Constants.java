@@ -33,16 +33,16 @@ public interface Constants {
     double FOURBAR_POWER = 0.5;
 
     /** Left clamp position when clamping */
-    double LEFT_CLAMP = 0;
+    double LEFT_CLAMP = 0.6;
 
     /** Right clamp position when clamping */
     double RIGHT_CLAMP = 0;
 
     /** Left clamp position when not clamping */
-    double LEFT_UNCLAMPED = 0.3;
+    double LEFT_UNCLAMPED = 0.2;
 
     /** Right clamp position when not clamping */
-    double RIGHT_UNCLAMPED = 0;
+    double RIGHT_UNCLAMPED = 0.6;
 
     /** Arm speed governor */
     double ARM_CONSTANT = 0.4;

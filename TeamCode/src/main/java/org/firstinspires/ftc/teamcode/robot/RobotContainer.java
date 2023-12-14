@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.controller.GameController;
 import org.firstinspires.ftc.teamcode.utils.Constants;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
+
 public class RobotContainer implements Constants {
     private DriveTrain drivetrain;
     private Arm arm;
@@ -15,24 +16,25 @@ public class RobotContainer implements Constants {
     double power, angle, turn;
     double armPower, extendPower;
     boolean highGear;
-    boolean clamped;
+    boolean leftClamped, rightClamped;
     boolean planeLaunch;
 
     public double angleForTelemetry;
 
     /**
      *
-     * @param hwMap hardwareMap
-     * @param heading robot starting heading
+     * @param hwMap       hardwareMap
+     * @param heading     robot starting heading
      * @param coordinates robot starting coordinates
-     * @param clamped is the hand grabbing anything
-     * @param wristPos is the wrist in any direction
-     * @param g1 gamepad1
-     * @param g2 gamepad2
+     * @param clamped     is the hand grabbing anything
+     * @param wristPos    is the wrist in any direction
+     * @param g1          gamepad1
+     * @param g2          gamepad2
      */
-    public RobotContainer (HardwareMap hwMap, double heading, double[] coordinates, boolean clamped, boolean planeLaunch, Gamepad g1, Gamepad g2){
+    public RobotContainer(HardwareMap hwMap, double heading, double[] coordinates, boolean clamped, boolean planeLaunch,
+            Gamepad g1, Gamepad g2) {
         drivetrain = new DriveTrain(hwMap, heading, coordinates);
-        hand = new Hand(hwMap, clamped);
+        hand = new Hand(hwMap);
         arm = new Arm(hwMap);
         power = 0.0;
         angle = 0.0;
@@ -55,7 +57,7 @@ public class RobotContainer implements Constants {
         drivetrain.updateWithOdometry();
     }
 
-    public void robot(){
+    public void robot() {
         updateInstances();
 
         power = driverOI.leftStickRadius();
@@ -66,17 +68,26 @@ public class RobotContainer implements Constants {
         extendPower = operatorOI.right_stick_y.get();
 
         highGear = (driverOI.right_trigger.get() > 0.5) ? true : false;
-            drivetrain.drive(power, angle, turn, highGear);
+        drivetrain.drive(power, angle, turn, highGear);
 
         arm.setPower(armPower);
         arm.extend(-extendPower);
 
-        if(operatorOI.a.wasJustReleased()){
-            clamped = !clamped;
+        if (operatorOI.x.wasJustReleased()) {
+            leftClamped = !leftClamped;
         }
-        hand.clamp(clamped);
+        if (operatorOI.b.wasJustReleased()) {
+            rightClamped = !rightClamped;
+        }
 
-        if(operatorOI.dpad_up.get()){
+        if (operatorOI.a.wasJustReleased()) {
+            leftClamped = !leftClamped;
+            rightClamped = !rightClamped;
+        }
+
+        hand.clamp(leftClamped, rightClamped);
+
+        if (operatorOI.dpad_up.get()) {
             planeLaunch = true;
         } else {
             planeLaunch = false;
@@ -84,7 +95,5 @@ public class RobotContainer implements Constants {
 
         arm.setPlane(planeLaunch);
     }
-
-
 
 }
