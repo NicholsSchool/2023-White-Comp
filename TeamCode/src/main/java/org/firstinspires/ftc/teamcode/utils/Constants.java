@@ -89,5 +89,7 @@ public interface Constants {
 
     //end of thanks anthony D:
 
+    double FOURBAR_MULTIPLIER = 0;
+
     
 }

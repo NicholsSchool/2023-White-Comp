@@ -35,7 +35,7 @@ public class Arm implements Constants{
         leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         winch.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        fourbar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fourbar.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         winch.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         fourbar.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -47,9 +47,16 @@ public class Arm implements Constants{
     public void setPower(double power) {
         leftArm.setPower(- ARM_CONSTANT * power);
         rightArm.setPower(- ARM_CONSTANT * power);
+        fourbarToPos(-400);
     }
     public void fourbarPower(double power){
         fourbar.setPower(power * FOURBAR_CONSTANT);
+    }
+
+    public void fourbarToPos(double velocity){
+        fourbar.setTargetPosition((int)(armPos() * FOURBAR_MULTIPLIER));
+        fourbar.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        fourbar.setVelocity(velocity);
     }
 
     public int armPos() {

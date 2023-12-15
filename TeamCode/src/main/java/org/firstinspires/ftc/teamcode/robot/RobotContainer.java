@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.controller.GameController;
 import org.firstinspires.ftc.teamcode.utils.Constants;
 
+
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class RobotContainer implements Constants {
@@ -64,6 +65,7 @@ public class RobotContainer implements Constants {
 
         arm.setPower(armPower);
         arm.extend(-extendPower);
+        arm.fourbarToPos(-400);
 
         if (operatorOI.x.wasJustReleased()) {
             leftClamped = !leftClamped;

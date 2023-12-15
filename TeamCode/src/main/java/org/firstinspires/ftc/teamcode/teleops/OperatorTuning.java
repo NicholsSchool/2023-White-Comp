@@ -23,12 +23,12 @@ public class OperatorTuning extends OpMode implements Constants {
     public static double leftClamp;
     public static double rightClamp;
     public static double fourbarPower;
+    public static int fourbarTarget;
     public static double armPower;
     @Override
     public void init() {
         hand = new Hand(hardwareMap);
         arm = new Arm(hardwareMap);
-
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
@@ -42,10 +42,9 @@ public class OperatorTuning extends OpMode implements Constants {
 
         hand.handTest(leftClamp, rightClamp);
 
-        arm.fourbarPower(fourbarPower);
-
         arm.setPower(armPower);
 
+        arm.fourbarToPos(fourbarPower);
 
         telemetry.addData("armPos", armPos);
         telemetry.addData("fourbarPos", fourbarPos);
