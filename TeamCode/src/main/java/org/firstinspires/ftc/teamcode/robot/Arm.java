@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -34,6 +35,7 @@ public class Arm implements Constants{
         leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         winch.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        fourbar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         winch.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         fourbar.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -45,11 +47,9 @@ public class Arm implements Constants{
     public void setPower(double power) {
         leftArm.setPower(- ARM_CONSTANT * power);
         rightArm.setPower(- ARM_CONSTANT * power);
-
-        fourbar.setTargetPosition((int)(armPos() * FOURBAR_CONSTANT));
-        fourbar.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        fourbar.setPower(FOURBAR_POWER);
-
+    }
+    public void fourbarPower(double power){
+        fourbar.setPower(power * FOURBAR_CONSTANT);
     }
 
     public int armPos() {

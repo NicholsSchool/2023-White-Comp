@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.Arm;
+import org.firstinspires.ftc.teamcode.robot.Hand;
 import org.firstinspires.ftc.teamcode.utils.Constants;
 
 /**
@@ -15,46 +16,41 @@ import org.firstinspires.ftc.teamcode.utils.Constants;
  * FTC Dashboard
  */
 @Config
-@TeleOp(name="[DASHBOARD] Drive Motor Tuning")
-public class DriveTuningTeleop extends OpMode implements Constants
-{
-    private final ElapsedTime runtime = new ElapsedTime();
+@TeleOp(name="[DASHBOARD] OperatorTuning")
+public class OperatorTuning extends OpMode implements Constants {
     public Arm arm;
+    public Hand hand;
+    public static double leftClamp;
+    public static double rightClamp;
+    public static double fourbarPower;
+    public static double armPower;
     @Override
     public void init() {
-        drivetrain = new DriveTrain(hardwareMap);
+        hand = new Hand(hardwareMap);
+        arm = new Arm(hardwareMap);
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
     @Override
     public void loop() {
-        if(runtime.time() > 5.0) {
-            runtime.reset();
-            targetMotorVelocity *= -1;
-        }
-//        drivetrain.backLeft.setVelocityPIDFCoefficients(p, i, d, f);
-//        drivetrain.backRight.setVelocityPIDFCoefficients(p, i ,d, f);
-//        drivetrain.frontLeft.setVelocityPIDFCoefficients(p, i, d, f);
-//        drivetrain.frontRight.setVelocityPIDFCoefficients(p, i, d, f);
 
-        drivetrain.backLeft.setVelocityPIDFCoefficients(lbp, lbi, lbd, lbf);
-        drivetrain.backRight.setVelocityPIDFCoefficients(rbp, rbi,rbd, rbf);
-        drivetrain.frontLeft.setVelocityPIDFCoefficients(lfp, lfi, lfd, lff);
-        drivetrain.frontRight.setVelocityPIDFCoefficients(rfp, rfi, rfd, rff);
+        double armPos = arm.armPos();
+        double fourbarPos = arm.fourBarPos();
+        double leftPos = hand.leftClamp.getPosition();
+        double rightPos = hand.rightClamp.getPosition();
 
-        drivetrain.driveTest(targetMotorVelocity);
+        hand.handTest(leftClamp, rightClamp);
 
-        double backLeftVel = drivetrain.backLeft.getVelocity();
-        double backRightVel = -drivetrain.backRight.getVelocity();
-        double frontLeftVel = drivetrain.frontLeft.getVelocity();
-        double frontRightVel = -drivetrain.frontRight.getVelocity();
+        arm.fourbarPower(fourbarPower);
 
-        telemetry.addData("back left vel", backLeftVel);
-        telemetry.addData("back right vel", backRightVel);
-        telemetry.addData("front left vel", frontLeftVel);
-        telemetry.addData("front right vel", frontRightVel);
-        telemetry.addData("target vel", targetMotorVelocity);
+        arm.setPower(armPower);
+
+
+        telemetry.addData("armPos", armPos);
+        telemetry.addData("fourbarPos", fourbarPos);
+        telemetry.addData("leftPos", leftPos);
+        telemetry.addData("rightPos", rightPos);
         telemetry.update();
     }
 }

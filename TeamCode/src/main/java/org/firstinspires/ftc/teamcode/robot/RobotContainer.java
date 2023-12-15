@@ -57,7 +57,7 @@ public class RobotContainer implements Constants {
         angleForTelemetry = angle;
         turn = driverOI.right_stick_x.get();
         armPower = operatorOI.left_stick_y.get();
-        extendPower = operatorOI.right_stick_y.get();
+        extendPower = operatorOI.right_trigger.get() - operatorOI.left_trigger.get();
 
         highGear = (driverOI.right_trigger.get() > 0.5) ? true : false;
         drivetrain.drive(power, angle, turn, highGear);
@@ -76,6 +76,8 @@ public class RobotContainer implements Constants {
             leftClamped = !leftClamped;
             rightClamped = !rightClamped;
         }
+
+        arm.fourbarPower(operatorOI.right_stick_y.get());
 
         hand.clamp(leftClamped, rightClamped);
 
