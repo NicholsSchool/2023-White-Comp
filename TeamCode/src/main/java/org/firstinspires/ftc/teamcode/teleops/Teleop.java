@@ -18,7 +18,7 @@ public class Teleop extends OpMode implements Constants {
      */
     @Override
     public void init() {
-        robotContainer = new RobotContainer(hardwareMap,0 , new double[]{0,0}, false,false, gamepad1, gamepad2);
+        robotContainer = new RobotContainer(hardwareMap, false, gamepad1, gamepad2);
     }
 
     /*

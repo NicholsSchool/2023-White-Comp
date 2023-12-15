@@ -12,28 +12,21 @@ public class RobotContainer implements Constants {
     private Hand hand;
     private GameController driverOI;
     private GameController operatorOI;
-    double[] coordinates;
     double power, angle, turn;
     double armPower, extendPower;
     boolean highGear;
     boolean leftClamped, rightClamped;
     boolean planeLaunch;
-
     public double angleForTelemetry;
 
     /**
      *
      * @param hwMap       hardwareMap
-     * @param heading     robot starting heading
-     * @param coordinates robot starting coordinates
-     * @param clamped     is the hand grabbing anything
-     * @param wristPos    is the wrist in any direction
      * @param g1          gamepad1
      * @param g2          gamepad2
      */
-    public RobotContainer(HardwareMap hwMap, double heading, double[] coordinates, boolean clamped, boolean planeLaunch,
-            Gamepad g1, Gamepad g2) {
-        drivetrain = new DriveTrain(hwMap, heading, coordinates);
+    public RobotContainer(HardwareMap hwMap, boolean planeLaunch, Gamepad g1, Gamepad g2) {
+        drivetrain = new DriveTrain(hwMap);
         hand = new Hand(hwMap);
         arm = new Arm(hwMap);
         power = 0.0;
@@ -54,7 +47,6 @@ public class RobotContainer implements Constants {
     public void updateInstances() {
         driverOI.updateValues();
         operatorOI.updateValues();
-        drivetrain.updateWithOdometry();
     }
 
     public void robot() {
