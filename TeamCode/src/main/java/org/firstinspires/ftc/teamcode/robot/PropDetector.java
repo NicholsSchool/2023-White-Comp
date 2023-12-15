@@ -118,7 +118,11 @@ public class PropDetector {
 
         }
 
-        return recsList.get(recsList.size() - 1);
+        try {
+            return recsList.get(recsList.size() - 1);
+        } catch (Exception e) {
+            return null;
+        }
 
     }
 
