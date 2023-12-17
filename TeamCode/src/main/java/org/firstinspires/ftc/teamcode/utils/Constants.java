@@ -5,6 +5,15 @@ package org.firstinspires.ftc.teamcode.utils;
  */
 public interface Constants {
 
+    /** Tuning for Odometry Heading Calculation */
+    double ODOMETRY_HEADING_CORRECTOR = 1;
+
+    /** Tuning for Odometry Localization X */
+    double ODOMETRY_X_CORRECTOR = 1;
+
+    /** Tuning for Odometry Localization Y */
+    double ODOMETRY_Y_CORRECTOR = 1;
+
     /** Drivetrain Low Gear Multiplier */
     double LOW_GEAR = 0.5 * 2800;
 
@@ -20,22 +29,22 @@ public interface Constants {
     double TURN_LIMITER = 0.5;
 
     /** Encoder Position Modifier for FB Motor */
-    double FOURBAR_CONSTANT = 0.12;
+    double FOURBAR_CONSTANT = 0;
 
     /** Power at which to rotate fourbar to get to parallel pos */
     double FOURBAR_POWER = 0.5;
 
     /** Left clamp position when clamping */
-    double LEFT_CLAMP = 0.31;
+    double LEFT_CLAMP = 0.6;
 
     /** Right clamp position when clamping */
-    double RIGHT_CLAMP = 0.02;
+    double RIGHT_CLAMP = 0;
 
     /** Left clamp position when not clamping */
-    double LEFT_UNCLAMPED = 0.12;
+    double LEFT_UNCLAMPED = 0.2;
 
     /** Right clamp position when not clamping */
-    double RIGHT_UNCLAMPED = 0.15;
+    double RIGHT_UNCLAMPED = 0.6;
 
     /** Arm speed governor */
     double ARM_CONSTANT = 0.4;
@@ -91,8 +100,6 @@ public interface Constants {
     double APRIL_TAG_6_Y = 42;
 
     //end of thanks anthony D:
-
-    double FOURBAR_MULTIPLIER = 0;
 
     double AUTO_DT_POWER = 0.5;
 
