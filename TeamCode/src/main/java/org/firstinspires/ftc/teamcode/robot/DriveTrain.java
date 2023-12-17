@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
+
 import org.firstinspires.ftc.teamcode.utils.*;
 
 
@@ -61,4 +63,29 @@ public class DriveTrain implements Constants{
         backLeft.setVelocity(velocity);
     }
 
+    public void driveToPosition(int fL, int fR, int bL, int bR) {
+        frontLeft.setTargetPosition(fL);
+        frontRight.setTargetPosition(fR);
+        backLeft.setTargetPosition(bL);
+        backRight.setTargetPosition(bR);
+
+        frontLeft.setMode(RunMode.RUN_TO_POSITION);
+        frontRight.setMode(RunMode.RUN_TO_POSITION);
+        backLeft.setMode(RunMode.RUN_TO_POSITION);
+        backRight.setMode(RunMode.RUN_TO_POSITION);
+
+        frontLeft.setPower(AUTO_DT_POWER);
+        frontRight.setPower(AUTO_DT_POWER);
+        backLeft.setPower(AUTO_DT_POWER);
+        backRight.setPower(AUTO_DT_POWER);
+    }
+
+    public int[] getDriveWheelPositions() {
+        int fL = frontLeft.getCurrentPosition();
+        int fR = frontRight.getCurrentPosition();
+        int bL = backLeft.getCurrentPosition();
+        int bR = backRight.getCurrentPosition();
+
+        return new int[]{fL, fR, bL, bR};
+    }
 }

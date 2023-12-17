@@ -29,7 +29,7 @@ public interface Constants {
     double TURN_LIMITER = 0.5;
 
     /** Encoder Position Modifier for FB Motor */
-    double FOURBAR_CONSTANT = 0.12;
+    double FOURBAR_CONSTANT = 0;
 
     /** Power at which to rotate fourbar to get to parallel pos */
     double FOURBAR_POWER = 0.5;
@@ -101,5 +101,26 @@ public interface Constants {
 
     //end of thanks anthony D:
 
-    
+    double AUTO_DT_POWER = 0.5;
+
+
+    //TODO: GET THESE
+    double AUTO_PROP_LEFTBOUND = 50;
+
+    double AUTO_PROP_RIGHTBOUND = 150;
+
+    int PROP_LEFT_FL_POSITION = 0;
+    int PROP_LEFT_FR_POSITION = 0;
+    int PROP_LEFT_BL_POSITION = 0;
+    int PROP_LEFT_BR_POSITION = 0;
+
+    int PROP_RIGHT_FL_POSITION = 0;
+    int PROP_RIGHT_FR_POSITION = 0;
+    int PROP_RIGHT_BL_POSITION = 0;
+    int PROP_RIGHT_BR_POSITION = 0;
+
+    int PROP_CENTER_FL_POSITION = 0;
+    int PROP_CENTER_FR_POSITION = 0;
+    int PROP_CENTER_BL_POSITION = 0;
+    int PROP_CENTER_BR_POSITION = 0;
 }
