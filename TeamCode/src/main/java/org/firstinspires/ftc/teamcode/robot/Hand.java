@@ -27,4 +27,10 @@ public class Hand implements Constants {
 
     }
 
+    public void handTest(double leftPos, double rightPos){
+        leftClamp.setPosition(leftPos);
+        rightClamp.setPosition(rightPos);
+
+    }
+
 }

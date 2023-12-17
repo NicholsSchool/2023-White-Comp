@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import org.firstinspires.ftc.teamcode.utils.*;
 
 
+
 public class DriveTrain implements Constants{
 
     //each motor is hooked up to their dead-wheel
@@ -45,7 +46,7 @@ public class DriveTrain implements Constants{
 
     public void drive(double power, double angle, double turn, boolean highGear){
         double kReorient = Math.PI / 4;
-        double frontLeftPower = -power * Math.sin(angle +kReorient) - turn * TURN_LIMITER;
+        double frontLeftPower = -power * Math.sin(angle + kReorient) - turn * TURN_LIMITER;
         double frontRightPower = -power * Math.cos(angle + kReorient) - turn * TURN_LIMITER;
         double backLeftPower = power * Math.cos(angle + kReorient) - turn * TURN_LIMITER;
         double backRightPower = power * Math.sin(angle + kReorient) - turn * TURN_LIMITER;
