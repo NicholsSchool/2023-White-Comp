@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
 import org.firstinspires.ftc.teamcode.utils.*;
@@ -12,6 +13,7 @@ public class DriveTrain implements Constants{
 
     //each motor is hooked up to their dead-wheel
     public DcMotorEx frontLeft, frontRight, backLeft, backRight;
+    public Servo ppp;
     HardwareMap hwMap;
 
     public DriveTrain(HardwareMap ahwMap) {
@@ -22,6 +24,9 @@ public class DriveTrain implements Constants{
         frontRight = hwMap.get(DcMotorEx.class, "frontRight");
         backLeft = hwMap.get(DcMotorEx.class, "backLeft");
         backRight = hwMap.get(DcMotorEx.class, "backRight");
+
+        ppp = hwMap.get(Servo.class, "pixelPooper");
+
 
         frontLeft.setDirection(DcMotorEx.Direction.FORWARD);
         frontRight.setDirection(DcMotorEx.Direction.FORWARD);
@@ -88,5 +93,9 @@ public class DriveTrain implements Constants{
         int bR = backRight.getCurrentPosition();
 
         return new int[]{fL, fR, bL, bR};
+    }
+
+    public void pooperToPosition(double pooperPosition) {
+        ppp.setPosition(pooperPosition);
     }
 }

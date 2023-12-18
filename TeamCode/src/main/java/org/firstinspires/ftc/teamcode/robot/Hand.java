@@ -10,7 +10,6 @@ public class Hand implements Constants {
     public Servo leftClamp, rightClamp;
     HardwareMap hwMap = null;
     public boolean clamped;
-    public double wristPos;
 
     public Hand(HardwareMap ahwMap){
 

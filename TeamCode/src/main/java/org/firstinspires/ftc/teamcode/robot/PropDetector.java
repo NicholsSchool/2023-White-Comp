@@ -85,7 +85,6 @@ public class PropDetector {
 
         // Create the TensorFlow processor by using a builder.
         tfod = new TfodProcessor.Builder()
-
                 .setModelAssetName(TFOD_MODEL_ASSET)
                 .setModelLabels(LABELS)
                 .build();

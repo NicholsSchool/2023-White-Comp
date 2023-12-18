@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.teamcode.controller.GameController;
 import org.firstinspires.ftc.teamcode.utils.Constants;
 
@@ -39,6 +40,7 @@ public class RobotContainer implements Constants {
         driverOI = new GameController(g1);
         operatorOI = new GameController(g2);
         this.planeLaunch = planeLaunch;
+        drivetrain.pooperToPosition(PPP_UP);
     }
 
     public int getArmPos() {
@@ -65,8 +67,8 @@ public class RobotContainer implements Constants {
 
         arm.setPower(armPower);
         arm.extend(-extendPower);
-        arm.fourbarToPos(-400);
-
+        //arm.fourbarUpdate(-400);
+        arm.fourbarPower(operatorOI.right_stick_y.get());
         if (operatorOI.x.wasJustReleased()) {
             leftClamped = !leftClamped;
         }

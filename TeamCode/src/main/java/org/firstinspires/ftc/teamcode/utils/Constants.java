@@ -29,22 +29,19 @@ public interface Constants {
     double TURN_LIMITER = 0.5;
 
     /** Encoder Position Modifier for FB Motor */
-    double FOURBAR_CONSTANT = 0;
-
-    /** Power at which to rotate fourbar to get to parallel pos */
-    double FOURBAR_POWER = 0.5;
+    double FB_POWER_MULT = 0.6;
 
     /** Left clamp position when clamping */
-    double LEFT_CLAMP = 0.6;
+    double LEFT_CLAMP = 0;
 
     /** Right clamp position when clamping */
-    double RIGHT_CLAMP = 0;
+    double RIGHT_CLAMP = 0.3;
 
     /** Left clamp position when not clamping */
-    double LEFT_UNCLAMPED = 0.2;
+    double LEFT_UNCLAMPED = 0.35;
 
     /** Right clamp position when not clamping */
-    double RIGHT_UNCLAMPED = 0.6;
+    double RIGHT_UNCLAMPED = 0;
 
     /** Arm speed governor */
     double ARM_CONSTANT = 0.4;
@@ -103,24 +100,29 @@ public interface Constants {
 
     double AUTO_DT_POWER = 0.5;
 
+    double AUTO_PROP_LEFTBOUND = 213;
 
-    //TODO: GET THESE
-    double AUTO_PROP_LEFTBOUND = 50;
+    double AUTO_PROP_RIGHTBOUND = 427;
 
-    double AUTO_PROP_RIGHTBOUND = 150;
+    int AUTO_FB_POS = 105;
 
-    int PROP_LEFT_FL_POSITION = 0;
-    int PROP_LEFT_FR_POSITION = 0;
-    int PROP_LEFT_BL_POSITION = 0;
-    int PROP_LEFT_BR_POSITION = 0;
+    int PROP_LEFT_FL_POSITION = -343;
+    int PROP_LEFT_FR_POSITION = 681;
+    int PROP_LEFT_BL_POSITION = -304;
+    int PROP_LEFT_BR_POSITION = 591;
 
-    int PROP_RIGHT_FL_POSITION = 0;
-    int PROP_RIGHT_FR_POSITION = 0;
-    int PROP_RIGHT_BL_POSITION = 0;
-    int PROP_RIGHT_BR_POSITION = 0;
+    int PROP_RIGHT_FL_POSITION = -994;
+    int PROP_RIGHT_FR_POSITION = 199;
+    int PROP_RIGHT_BL_POSITION = -619;
+    int PROP_RIGHT_BR_POSITION = 231;
 
-    int PROP_CENTER_FL_POSITION = 0;
-    int PROP_CENTER_FR_POSITION = 0;
-    int PROP_CENTER_BL_POSITION = 0;
-    int PROP_CENTER_BR_POSITION = 0;
+    int PROP_CENTER_FL_POSITION = -1015;
+    int PROP_CENTER_FR_POSITION = 537;
+    int PROP_CENTER_BL_POSITION = -583;
+    int PROP_CENTER_BR_POSITION = 415;
+
+    double FB_POS_MULT = 0.08;
+
+    double PPP_UP = 0.6;
+    double PPP_DROP = 0.0;
 }

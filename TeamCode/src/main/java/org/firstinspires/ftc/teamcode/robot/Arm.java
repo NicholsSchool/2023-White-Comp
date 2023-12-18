@@ -47,14 +47,13 @@ public class Arm implements Constants{
     public void setPower(double power) {
         leftArm.setPower(- ARM_CONSTANT * power);
         rightArm.setPower(- ARM_CONSTANT * power);
-        fourbarToPos(-400);
     }
     public void fourbarPower(double power){
-        fourbar.setPower(power * FOURBAR_CONSTANT);
+        fourbar.setPower(power * FB_POWER_MULT);
     }
 
-    public void fourbarToPos(double velocity){
-        fourbar.setTargetPosition((int)(armPos() * FOURBAR_CONSTANT));
+    public void fourbarUpdate(double velocity){
+        fourbar.setTargetPosition((int)(armPos() * FB_POS_MULT));
         fourbar.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fourbar.setVelocity(velocity);
     }

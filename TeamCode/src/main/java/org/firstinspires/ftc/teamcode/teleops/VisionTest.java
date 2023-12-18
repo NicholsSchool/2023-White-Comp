@@ -14,13 +14,15 @@ public class VisionTest extends OpMode {
 
     public void init() {
 
-        pd = new PropDetector(hardwareMap, true);
+        pd = new PropDetector(hardwareMap, false);
 
     }
     
     public void loop() {
 
         Recognition bestRec = pd.getBestRecognitions();
+
+        if (bestRec == null) { return; }
 
         telemetry.addLine("THIS AINT WORKIN!!!");
         telemetry.addData("> PREDICTION CONFIDENCE", bestRec.getConfidence());

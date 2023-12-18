@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.Arm;
 import org.firstinspires.ftc.teamcode.robot.Hand;
@@ -44,7 +43,7 @@ public class OperatorTuning extends OpMode implements Constants {
 
         arm.setPower(armPower);
 
-        arm.fourbarToPos(fourbarPower);
+        arm.fourbarUpdate(fourbarPower);
 
         telemetry.addData("armPos", armPos);
         telemetry.addData("fourbarPos", fourbarPos);
