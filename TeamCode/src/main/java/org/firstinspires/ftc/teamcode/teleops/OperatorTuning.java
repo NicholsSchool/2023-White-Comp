@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.Arm;
+import org.firstinspires.ftc.teamcode.robot.DriveTrain;
 import org.firstinspires.ftc.teamcode.robot.Hand;
 import org.firstinspires.ftc.teamcode.utils.Constants;
 
@@ -15,8 +16,9 @@ import org.firstinspires.ftc.teamcode.utils.Constants;
  * FTC Dashboard
  */
 @Config
-@TeleOp(name="[DASHBOARD] OperatorTuning")
+@TeleOp(name="[DASHBOARD] DevTesting")
 public class OperatorTuning extends OpMode implements Constants {
+    public DriveTrain dt;
     public Arm arm;
     public Hand hand;
     public static double leftClamp;
@@ -28,6 +30,7 @@ public class OperatorTuning extends OpMode implements Constants {
     public void init() {
         hand = new Hand(hardwareMap);
         arm = new Arm(hardwareMap);
+        dt = new DriveTrain(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
@@ -49,6 +52,7 @@ public class OperatorTuning extends OpMode implements Constants {
         telemetry.addData("fourbarPos", fourbarPos);
         telemetry.addData("leftPos", leftPos);
         telemetry.addData("rightPos", rightPos);
+        telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
         telemetry.update();
     }
 }

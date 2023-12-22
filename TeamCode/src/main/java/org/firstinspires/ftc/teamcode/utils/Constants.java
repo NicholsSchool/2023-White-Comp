@@ -15,10 +15,10 @@ public interface Constants {
     double ODOMETRY_Y_CORRECTOR = 1;
 
     /** Drivetrain Low Gear Multiplier */
-    double LOW_GEAR = 0.5 * 2800;
+    double LOW_GEAR = 0.5;
 
     /** Drivetrain High Gear Multiplier */
-    double HIGH_GEAR = 0.7 * 2800;
+    double HIGH_GEAR = 0.7;
 
     /** Controller Deadband */
     double DEFAULT_DEADBAND = 0;
