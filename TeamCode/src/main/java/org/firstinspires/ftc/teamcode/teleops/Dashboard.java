@@ -6,6 +6,9 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import java.util.Arrays;
+
+import org.firstinspires.ftc.teamcode.robot.ATPoseCalculator;
 import org.firstinspires.ftc.teamcode.robot.Arm;
 import org.firstinspires.ftc.teamcode.robot.DriveTrain;
 import org.firstinspires.ftc.teamcode.robot.Hand;
@@ -17,9 +20,10 @@ import org.firstinspires.ftc.teamcode.utils.Constants;
  */
 @Config
 @TeleOp(name="[DASHBOARD] DevTesting")
-public class OperatorTuning extends OpMode implements Constants {
+public class Dashboard extends OpMode implements Constants {
     public DriveTrain dt;
     public Arm arm;
+    public ATPoseCalculator at;
     public Hand hand;
     public static double leftClamp;
     public static double rightClamp;
@@ -31,6 +35,7 @@ public class OperatorTuning extends OpMode implements Constants {
         hand = new Hand(hardwareMap);
         arm = new Arm(hardwareMap);
         dt = new DriveTrain(hardwareMap);
+        at = new ATPoseCalculator(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
@@ -53,6 +58,7 @@ public class OperatorTuning extends OpMode implements Constants {
         telemetry.addData("leftPos", leftPos);
         telemetry.addData("rightPos", rightPos);
         telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
+        telemetry.addData("ATPose", Arrays.toString(at.update()));
         telemetry.update();
     }
 }

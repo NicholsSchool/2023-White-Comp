@@ -106,20 +106,14 @@ public interface Constants {
 
     int AUTO_FB_POS = 105;
 
-    int PROP_LEFT_FL_POSITION = -343;
-    int PROP_LEFT_FR_POSITION = 681;
-    int PROP_LEFT_BL_POSITION = -304;
-    int PROP_LEFT_BR_POSITION = 591;
+    double PROP_LEFT_X = 0.0;
+    double PROP_LEFT_Y = 0.0;
 
-    int PROP_RIGHT_FL_POSITION = -994;
-    int PROP_RIGHT_FR_POSITION = 199;
-    int PROP_RIGHT_BL_POSITION = -619;
-    int PROP_RIGHT_BR_POSITION = 231;
+    double PROP_CENTER_X = 0.0;
+    double PROP_CENTER_Y = 0.0;
 
-    int PROP_CENTER_FL_POSITION = -1015;
-    int PROP_CENTER_FR_POSITION = 537;
-    int PROP_CENTER_BL_POSITION = -583;
-    int PROP_CENTER_BR_POSITION = 415;
+    double PROP_RIGHT_X = 0.0;
+    double PROP_RIGHT_Y = 0.0;
 
     double FB_POS_MULT = 0.08;
 
