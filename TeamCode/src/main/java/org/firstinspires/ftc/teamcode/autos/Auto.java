@@ -17,7 +17,7 @@ public class Auto extends LinearOpMode implements Constants {
     @Override
     public void runOpMode() {
 
-        DriveTrain drivetrain = new DriveTrain(hardwareMap);
+        DriveTrain drivetrain = new DriveTrain(hardwareMap, 0, 0, 0);
         // TODO: Make one for blue alliance
         PropDetector pd = new PropDetector(hardwareMap, false);
 

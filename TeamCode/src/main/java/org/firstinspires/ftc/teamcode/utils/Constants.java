@@ -5,14 +5,11 @@ package org.firstinspires.ftc.teamcode.utils;
  */
 public interface Constants {
 
-    /** Tuning for Odometry Heading Calculation */
-    double ODOMETRY_HEADING_CORRECTOR = 1;
-
     /** Tuning for Odometry Localization X */
-    double ODOMETRY_X_CORRECTOR = 1;
+    double ODOMETRY_X_CORRECTOR = 0.00185 / 2;
 
     /** Tuning for Odometry Localization Y */
-    double ODOMETRY_Y_CORRECTOR = 1;
+    double ODOMETRY_Y_CORRECTOR = 0.00185 / 2;
 
     /** Drivetrain Low Gear Multiplier */
     double LOW_GEAR = 0.5;

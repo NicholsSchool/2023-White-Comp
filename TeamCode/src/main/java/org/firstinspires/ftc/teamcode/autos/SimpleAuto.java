@@ -15,7 +15,7 @@ public class SimpleAuto extends LinearOpMode implements Constants{
     private ElapsedTime time = new ElapsedTime();
 
     public void runOpMode() {
-        dt = new DriveTrain(hardwareMap);
+        dt = new DriveTrain(hardwareMap, 0, 0, 0);
         arm = new Arm(hardwareMap);
 
         telemetry.addLine("AUTO INITIATED");

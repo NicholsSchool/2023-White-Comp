@@ -34,7 +34,7 @@ public class Dashboard extends OpMode implements Constants {
     public void init() {
         hand = new Hand(hardwareMap);
         arm = new Arm(hardwareMap);
-        dt = new DriveTrain(hardwareMap);
+        dt = new DriveTrain(hardwareMap, 0, 0, 0);
         at = new ATPoseCalculator(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
@@ -53,12 +53,16 @@ public class Dashboard extends OpMode implements Constants {
 
         arm.fourbarUpdate(fourbarPower);
 
+        dt.updateWithOdometry();
+
         telemetry.addData("armPos", armPos);
         telemetry.addData("fourbarPos", fourbarPos);
         telemetry.addData("leftPos", leftPos);
         telemetry.addData("rightPos", rightPos);
         telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
         telemetry.addData("ATPose", Arrays.toString(at.update()));
+        telemetry.addData("robot X", dt.getX());
+        telemetry.addData("robot y", dt.getY());
         telemetry.update();
     }
 }

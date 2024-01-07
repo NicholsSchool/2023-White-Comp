@@ -17,10 +17,20 @@ public class DriveTrain implements Constants{
     public AHRS navx;
     public Servo ppp;
     HardwareMap hwMap;
+    //odometry stuff
+    public double x, y;
+    private int lastFR, lastFL, lastBR, lastBL;
+    private final double angleOffset;
 
-    public DriveTrain(HardwareMap hwMap) {
+
+
+    public DriveTrain(HardwareMap hwMap, double startX, double startY, double angleOffset) {
 
         this.hwMap = hwMap;
+        this.x = startX;
+        this.y = startY;
+        this.angleOffset = angleOffset;
+
 
         frontLeft = hwMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hwMap.get(DcMotorEx.class, "frontRight");
@@ -53,7 +63,7 @@ public class DriveTrain implements Constants{
     }
 
     public void drive(double power, double angle, double turn, boolean highGear){
-        double kReorient = (Math.PI / 4) + getHeadingNavX();
+        double kReorient = (Math.PI / 4) + getHeadingNavX() + angleOffset;
         double frontLeftPower = -power * Math.sin(angle + kReorient) - turn * TURN_LIMITER;
         double frontRightPower = -power * Math.cos(angle + kReorient) - turn * TURN_LIMITER;
         double backLeftPower = power * Math.cos(angle + kReorient) - turn * TURN_LIMITER;
@@ -77,4 +87,37 @@ public class DriveTrain implements Constants{
 
         return heading;
     }
+
+    public void updateWithOdometry(){
+        int currentFR = frontRight.getCurrentPosition();
+        int currentFL = frontLeft.getCurrentPosition();
+        int currentBR = backRight.getCurrentPosition();
+        int currentBL = backLeft.getCurrentPosition();
+
+        int deltaFR = currentFR - lastFR;
+        int deltaFL = currentFL - lastFL;
+        int deltaBR = currentBR - lastBR;
+        int deltaBL = currentBL - lastBL;
+
+        double deltaY = (deltaBL - deltaFR) / 2 * ODOMETRY_X_CORRECTOR;
+        double deltaX = -(deltaFL - deltaBR) / 2 * ODOMETRY_Y_CORRECTOR;
+
+        y += deltaX * Math.cos(getHeadingNavX()) + deltaY * Math.sin(getHeadingNavX());
+        x += deltaX * Math.sin(getHeadingNavX()) + deltaY * Math.cos(getHeadingNavX());
+
+        lastFR = currentFR;
+        lastBL = currentBL;
+        lastBR = currentBR;
+        lastFL = currentFL;
+
+    }
+
+    public double getX(){
+        return x;
+    }
+    public double getY(){
+        return y;
+
+    }
+
 }
