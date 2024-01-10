@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.robot;
+package org.firstinspires.ftc.teamcode.utils;
 
 import java.util.stream.DoubleStream;
 
-import org.firstinspires.ftc.teamcode.utils.SplineMath;
+import org.firstinspires.ftc.teamcode.robot.DriveTrain;
 
 public class Spline {
 
@@ -12,8 +12,9 @@ public class Spline {
     
     private double[][] points;
     private double correctionDistance;
-    private double[] robotPosition;
+    public double[] robotPosition;
     private int steps;
+    private DriveTrain dt;
 
     /**
      * this uses cubic bezier so there should be 4 points, the first and last are the start and end points, the middle two are the points that define the curve.
@@ -23,11 +24,12 @@ public class Spline {
      * @param robotPosition starting point of robot
      * @param steps number of intervals desired t is broken into (larger means more precise)
      */
-    public Spline(double[][] points, double correctionDistance, double[] robotPosition, int steps) {
+    public Spline(double[][] points, double correctionDistance, DriveTrain dt, int steps) {
         
         this.points = points;
         this.correctionDistance = correctionDistance;
-        this.robotPosition = robotPosition;
+        this.dt = dt;
+        robotPosition = new double[]{dt.getX(), dt.getY()};
         this.steps = steps;
     }
 
@@ -35,9 +37,10 @@ public class Spline {
      * updates the position of robot
      * @param robotPosition robots current position (x,y)
      */
-    public void update(double[] robotPosition){
+    public void update(){
 
-        this.robotPosition = robotPosition;
+        dt.updateWithOdometry();
+        robotPosition = new double[]{dt.getX(), dt.getY()};
 
     }
 
@@ -110,7 +113,7 @@ public class Spline {
      */
     public double desiredT(){
 
-        double height = 10000000;
+        double height = distance(1);
 
         double desiredT = 0;
 

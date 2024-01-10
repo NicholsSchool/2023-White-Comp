@@ -9,7 +9,7 @@ public interface Constants {
     double ODOMETRY_X_CORRECTOR = 0.00185 / 2;
 
     /** Tuning for Odometry Localization Y */
-    double ODOMETRY_Y_CORRECTOR = 0.00185 / 2;
+    double ODOMETRY_Y_CORRECTOR = 0.00185 * 65/72;
 
     /** Drivetrain Low Gear Multiplier */
     double LOW_GEAR = 0.5;

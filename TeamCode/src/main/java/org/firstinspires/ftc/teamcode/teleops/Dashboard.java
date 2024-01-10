@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.Arrays;
 
+import org.firstinspires.ftc.teamcode.controller.GameController;
 import org.firstinspires.ftc.teamcode.robot.ATPoseCalculator;
 import org.firstinspires.ftc.teamcode.robot.Arm;
 import org.firstinspires.ftc.teamcode.robot.DriveTrain;
@@ -28,6 +29,7 @@ public class Dashboard extends OpMode implements Constants {
     public static double leftClamp;
     public static double rightClamp;
     public static double fourbarPower;
+    private GameController driverOI;
     public static int fourbarTarget;
     public static double armPower;
     @Override
@@ -37,6 +39,7 @@ public class Dashboard extends OpMode implements Constants {
         dt = new DriveTrain(hardwareMap, 0, 0, 0);
         at = new ATPoseCalculator(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        driverOI = new GameController(gamepad1);
     }
 
     @Override
@@ -55,14 +58,14 @@ public class Dashboard extends OpMode implements Constants {
 
         dt.updateWithOdometry();
 
+        driverOI.updateValues();
+
         telemetry.addData("armPos", armPos);
         telemetry.addData("fourbarPos", fourbarPos);
         telemetry.addData("leftPos", leftPos);
         telemetry.addData("rightPos", rightPos);
         telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
-        telemetry.addData("ATPose", Arrays.toString(at.update()));
-        telemetry.addData("robot X", dt.getX());
-        telemetry.addData("robot y", dt.getY());
+        telemetry.addData("HHGUDFGUIHI", driverOI.leftStickTheta());
         telemetry.update();
     }
 }
