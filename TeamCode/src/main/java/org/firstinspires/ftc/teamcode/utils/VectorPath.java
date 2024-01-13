@@ -5,12 +5,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.content.res.AssetManager;
+
+import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
+import org.firstinspires.ftc.teamcode.robot.DriveTrain;
+
 import org.json.JSONArray;
+
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
  *  Class for Vector Waypointing using SVG Paths
@@ -19,6 +25,8 @@ public class VectorPath {
 
     private ArrayList<double[]> points;
 
+    private DriveTrain dt;
+
     /**
      * Initializes a new VectorPath from a keyframe file.
      * The Keyframe file must consist of an array of points (Float[][]/Double[][])
@@ -26,13 +34,15 @@ public class VectorPath {
      * @param KeyframeAssetName The filename of the Keyframe JSON File (ex. Keyframes.json)
      * @param context Something important (try "this")
      */
-    public VectorPath(String KeyframeAssetName, Context context) {
+    public VectorPath(HardwareMap hwMap, String KeyframeAssetName) {
 
-        AssetManager am = context.getAssets();
+        AssetManager am = AppUtil.getDefContext().getAssets();
 
         InputStream is;
 
         String input;
+
+        dt = new DriveTrain(hwMap, 0, 0, 0);
 
         try {
 
@@ -113,9 +123,13 @@ public class VectorPath {
 
     }
 
-    public void follow(Boolean useAprilTagLocalization) throws Exception {
+    public void follow(Boolean useAprilTagLocalization) {
 
-        throw new IllegalStateException("Not Implemented");
+        for (double[] point : points) {
+            
+            dt.driveToPosition(point[0], point[1], 0.7, 0.5);
+
+        }
 
     }
 }
