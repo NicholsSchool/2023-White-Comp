@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import java.util.stream.DoubleStream;
 
+import org.firstinspires.ftc.teamcode.utils.SplineMath;
+
 public class Spline {
 
     //TODO: add distance as a factor for desiredT?

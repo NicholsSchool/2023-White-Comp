@@ -112,9 +112,9 @@ public class DriveTrain implements Constants{
 
     }
 
-    public void driveToPosition(double x, double y, double power, double returnThreshhold){
+    public void driveToPosition(double x, double y, double power, double returnThreshold){
         
-        while(!((x - returnThreshhold) < this.x && this.x < (x + returnThreshold) && (y - returnThreshhold) < this.y && this.y < (y + returnThreshold))){
+        while(!((x - returnThreshold) < this.x && this.x < (x + returnThreshold) && (y - returnThreshold) < this.y && this.y < (y + returnThreshold))){
         double slope = (this.y - y) / (this.x - x); 
         double angle = x > 0 ? Math.atan(slope) : Calculator.addAngles(Math.atan(slope), Math.PI);
         drive(power, angle, 0, true);
