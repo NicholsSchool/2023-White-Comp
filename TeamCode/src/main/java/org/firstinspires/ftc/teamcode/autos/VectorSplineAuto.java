@@ -22,12 +22,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="direction and magnitude", group="")
 public class VectorSplineAuto extends LinearOpMode {
 
-    VectorPath path = new VectorPath(hardwareMap, "under_truss_from_origin_test.json");
+    VectorPath path;
 
     @Override
     public void runOpMode() {
 
-        waitForStart();;
+        path = new VectorPath(hardwareMap, "under_truss_from_origin_test.json");
+
+        waitForStart();
 
         path.follow(false);
 

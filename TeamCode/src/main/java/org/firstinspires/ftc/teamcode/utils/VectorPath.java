@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 import org.firstinspires.ftc.teamcode.robot.DriveTrain;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -32,7 +33,6 @@ public class VectorPath {
      * The Keyframe file must consist of an array of points (Float[][]/Double[][])
      * 
      * @param KeyframeAssetName The filename of the Keyframe JSON File (ex. Keyframes.json)
-     * @param context Something important (try "this")
      */
     public VectorPath(HardwareMap hwMap, String KeyframeAssetName) {
 
@@ -42,7 +42,7 @@ public class VectorPath {
 
         String input;
 
-        dt = new DriveTrain(hwMap, 0, 0, 0);
+        dt = new DriveTrain(hwMap, 0, 0, Math.PI/2);
 
         try {
 
@@ -76,7 +76,12 @@ public class VectorPath {
 
         }
 
-        JSONArray pointsJSON = new JSONArray(input);
+        JSONArray pointsJSON;
+        try {
+            pointsJSON = new JSONArray(input);
+        } catch (JSONException e) {
+            throw new IllegalStateException("The inputted file could not be parsed as a JSON Array.");
+        }
 
         if (pointsJSON != null) { 
 
@@ -88,7 +93,11 @@ public class VectorPath {
                 double[] point = new double[2];
 
                 for (int j = 0; j < 2; j++) {
-                    point[j] = Double.parseDouble(pointsJSON.getJSONArray(i).getString(j));
+                    try {
+                        point[j] = Double.parseDouble(pointsJSON.getJSONArray(i).getString(j));
+                    } catch (JSONException e) {
+                        throw new IllegalStateException("Array Index out of range (if this happens, something is very wrong)");
+                    }
                 }
 
                 points.add(point);

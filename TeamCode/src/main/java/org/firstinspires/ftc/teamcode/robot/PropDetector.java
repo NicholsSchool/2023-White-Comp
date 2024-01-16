@@ -33,7 +33,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.ArrayList;
@@ -71,7 +70,7 @@ public class PropDetector {
 
         this.hwMap = hwMap;
 
-        TFOD_MODEL_ASSET = isBlueAlliance ? "whiteBluePropModel.tflite" : "whiteRedPropModel.tflite";
+        TFOD_MODEL_ASSET = "converted_model.tflite";
 
         initTfod();
 
@@ -87,6 +86,7 @@ public class PropDetector {
         tfod = new TfodProcessor.Builder()
                 .setModelAssetName(TFOD_MODEL_ASSET)
                 .setModelLabels(LABELS)
+                .setIsModelTensorFlow2(true)
                 .build();
 
         // Create the vision portal by using a builder.
