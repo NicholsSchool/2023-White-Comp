@@ -25,31 +25,41 @@ public class SimpleAuto extends LinearOpMode implements Constants{
 
         time.reset();
 
-        dt.drive(1, Math.PI/2, 0, false);
-        while (opModeIsActive() && (time.seconds() < 1.6)) {
-            telemetry.addData("MOVING! Elapsed time", time.seconds());
+        while (!dt.driveToPosition(0, 50, 0.8, 0.5)) {
+            telemetry.addLine("MOVING TO 0, 50");
+            telemetry.addData("CURRENT X", dt.x);
+            telemetry.addData("CURRENT Y", dt.y);
             telemetry.update();
         }
 
-        // dt.drive(1, Math.PI, 0, false);
-        // time.reset();
-        // while (opModeIsActive() && (time.seconds() < 0.2)) {
-        //     telemetry.addData("uhh thing", "huh");
+        telemetry.addLine("DONE");
+
+
+        // dt.drive(1, Math.PI/2, 0, false);
+        // while (opModeIsActive() && (time.seconds() < 1.6)) {
+        //     telemetry.addData("MOVING! Elapsed time", time.seconds());
         //     telemetry.update();
         // }
 
-        dt.drive(0, 0, 0, false);
-        time.reset();
-        while (opModeIsActive() && (time.seconds() < 3)) {
-            dt.pooperToPosition(PPP_DROP);
-        }
+        // // dt.drive(1, Math.PI, 0, false);
+        // // time.reset();
+        // // while (opModeIsActive() && (time.seconds() < 0.2)) {
+        // //     telemetry.addData("uhh thing", "huh");
+        // //     telemetry.update();
+        // // }
 
-        arm.extend(1);
-        time.reset();
-        while (opModeIsActive() && (time.seconds() < 9)) {
-            telemetry.addData("extending", "yes");
-            telemetry.update();
-        }
+        // dt.drive(0, 0, 0, false);
+        // time.reset();
+        // while (opModeIsActive() && (time.seconds() < 3)) {
+        //     dt.pooperToPosition(PPP_DROP);
+        // }
+
+        // arm.extend(1);
+        // time.reset();
+        // while (opModeIsActive() && (time.seconds() < 9)) {
+        //     telemetry.addData("extending", "yes");
+        //     telemetry.update();
+        // }
 
     }
 }

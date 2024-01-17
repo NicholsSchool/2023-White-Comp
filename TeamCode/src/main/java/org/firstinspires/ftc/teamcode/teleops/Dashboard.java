@@ -42,6 +42,10 @@ public class Dashboard extends OpMode implements Constants {
         driverOI = new GameController(gamepad1);
     }
 
+    public void start() {
+        // dt.driveToPosition(0, 50, 0.7, 1);
+    }
+
     @Override
     public void loop() {
 
@@ -66,6 +70,8 @@ public class Dashboard extends OpMode implements Constants {
         telemetry.addData("rightPos", rightPos);
         telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
         telemetry.addData("HHGUDFGUIHI", driverOI.leftStickTheta());
+        telemetry.addData("x", dt.getX());
+        telemetry.addData("y", dt.getY());
         telemetry.update();
     }
 }

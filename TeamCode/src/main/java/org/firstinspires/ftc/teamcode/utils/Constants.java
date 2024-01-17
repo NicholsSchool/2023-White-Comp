@@ -6,16 +6,16 @@ package org.firstinspires.ftc.teamcode.utils;
 public interface Constants {
 
     /** Tuning for Odometry Localization X */
-    double ODOMETRY_X_CORRECTOR = 0.00185 / 2;
+    double ODOMETRY_X_CORRECTOR = 0.000909166544136;
 
     /** Tuning for Odometry Localization Y */
-    double ODOMETRY_Y_CORRECTOR = 0.00185 * 65/72;
+    double ODOMETRY_Y_CORRECTOR = 0.000920761516143;
 
     /** Drivetrain Low Gear Multiplier */
     double LOW_GEAR = 0.5;
 
     /** Drivetrain High Gear Multiplier */
-    double HIGH_GEAR = 0.7;
+    double HIGH_GEAR = 0.8;
 
     /** Controller Deadband */
     double DEFAULT_DEADBAND = 0;
