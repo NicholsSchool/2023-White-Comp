@@ -115,7 +115,7 @@ public class Spline {
 
         double height = distance(1);
 
-        double desiredT = 0;
+        double desiredT = 1;
 
         //number of points sampled
         double splineSample = steps;

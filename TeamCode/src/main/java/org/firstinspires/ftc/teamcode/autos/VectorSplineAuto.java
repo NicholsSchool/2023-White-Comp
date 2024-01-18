@@ -27,7 +27,7 @@ public class VectorSplineAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        path = new VectorPath(hardwareMap, "under_truss_from_origin_test.json");
+        path = new VectorPath(hardwareMap, "robot_oriented_test.json");
 
         waitForStart();
 

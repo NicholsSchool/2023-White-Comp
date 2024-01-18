@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.Arm;
 import org.firstinspires.ftc.teamcode.robot.DriveTrain;
 import org.firstinspires.ftc.teamcode.robot.Hand;
 import org.firstinspires.ftc.teamcode.utils.Constants;
+import org.firstinspires.ftc.teamcode.utils.VectorPath;
 
 /**
  * A teleop for tuning drive motors using
@@ -32,6 +33,7 @@ public class Dashboard extends OpMode implements Constants {
     private GameController driverOI;
     public static int fourbarTarget;
     public static double armPower;
+    public VectorPath vecpath;
     @Override
     public void init() {
         hand = new Hand(hardwareMap);
@@ -40,6 +42,7 @@ public class Dashboard extends OpMode implements Constants {
         at = new ATPoseCalculator(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         driverOI = new GameController(gamepad1);
+        vecpath = new VectorPath(hardwareMap, "robot_oriented_test.json");
     }
 
     public void start() {
@@ -66,12 +69,10 @@ public class Dashboard extends OpMode implements Constants {
 
         telemetry.addData("armPos", armPos);
         telemetry.addData("fourbarPos", fourbarPos);
-        telemetry.addData("leftPos", leftPos);
-        telemetry.addData("rightPos", rightPos);
         telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
-        telemetry.addData("HHGUDFGUIHI", driverOI.leftStickTheta());
         telemetry.addData("x", dt.getX());
         telemetry.addData("y", dt.getY());
+        telemetry.addData("points read from json", null);
         telemetry.update();
     }
 }
