@@ -16,12 +16,12 @@ public class Auto extends LinearOpMode implements Constants {
     @Override
     public void runOpMode() {
 
-        DriveTrain dt = new DriveTrain(hardwareMap, 34.5, -62.6, 0);
+        DriveTrain dt = new DriveTrain(hardwareMap, 37.3, -61.9, 0);
 
         ElapsedTime loopTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         ElapsedTime sample = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
-        double[][] points = new double[][]{{34.5, -62.6}, {30.8, -37.1}, {35, -27.2}, {62.3, -35.8}};
+        double[][] points = new double[][]{{37.3, -61.9}, {47.0, -1.0}, {-16.8, 22.3}, {-35.9, -61.0}};
       
         Spline spline = new Spline(points, 10, dt, 100);
 

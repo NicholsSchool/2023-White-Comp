@@ -70,7 +70,7 @@ public class PropDetector {
 
         this.hwMap = hwMap;
 
-        TFOD_MODEL_ASSET = "converted_model.tflite";
+        TFOD_MODEL_ASSET = "bluePropMeta.tflite";
 
         initTfod();
 
@@ -99,6 +99,12 @@ public class PropDetector {
         builder.addProcessor(tfod);
 
         visionPortal = builder.build();
+    }
+
+    public List<Recognition> getRecognitions() {
+
+        return tfod.getRecognitions();
+
     }
 
     public Recognition getBestRecognitions() {
