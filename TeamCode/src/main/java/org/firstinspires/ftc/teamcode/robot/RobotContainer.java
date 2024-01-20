@@ -27,8 +27,8 @@ public class RobotContainer implements Constants {
      * @param g1          gamepad1
      * @param g2          gamepad2
      */
-    public RobotContainer(HardwareMap hwMap, boolean planeLaunch, Gamepad g1, Gamepad g2) {
-        drivetrain = new DriveTrain(hwMap, 0, 0 , 0);
+    public RobotContainer(HardwareMap hwMap, boolean planeLaunch, Gamepad g1, Gamepad g2, boolean isRedAlliance) {
+        drivetrain = new DriveTrain(hwMap, 0, 0 , isRedAlliance ? Math.PI/2 : -Math.PI / 2);
         hand = new Hand(hwMap);
         arm = new Arm(hwMap);
         power = 0.0;
@@ -40,7 +40,6 @@ public class RobotContainer implements Constants {
         driverOI = new GameController(g1);
         operatorOI = new GameController(g2);
         this.planeLaunch = planeLaunch;
-        drivetrain.pooperToPosition(PPP_UP);
         
     }
 

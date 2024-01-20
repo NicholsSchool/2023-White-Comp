@@ -29,16 +29,19 @@ public interface Constants {
     double FB_POWER_MULT = 0.6;
 
     /** Left clamp position when clamping */
-    double LEFT_CLAMP = 0;
+    double LEFT_CLAMP = 0.35;
 
     /** Right clamp position when clamping */
-    double RIGHT_CLAMP = 0.3;
+    double RIGHT_CLAMP = 0;
 
     /** Left clamp position when not clamping */
-    double LEFT_UNCLAMPED = 0.35;
+    double LEFT_UNCLAMPED = 0;
+
+    
+
 
     /** Right clamp position when not clamping */
-    double RIGHT_UNCLAMPED = 0;
+    double RIGHT_UNCLAMPED = 0.3;
 
     /** Arm speed governor */
     double ARM_CONSTANT = 0.4;

@@ -58,6 +58,26 @@ public class Arm implements Constants{
         fourbar.setVelocity(velocity);
     }
 
+
+    
+    public void setFourbarPos(int targetPos) {
+        double error = targetPos - fourBarPos();
+        while (Math.abs(error) > 15){
+            error = targetPos - fourBarPos();
+            fourbarPower(error * 0.003);
+        }
+        
+    }
+
+    public void setArmPos(int targetPos) {
+        double error = targetPos - armPos();
+        while (Math.abs(error) > 15){
+            error = targetPos - armPos();
+            setPower(error * 0.001);
+        }
+        
+    }
+
     public int armPos() {
         return rightArm.getCurrentPosition();
     }

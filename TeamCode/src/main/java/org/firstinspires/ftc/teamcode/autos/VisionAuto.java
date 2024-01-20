@@ -1,74 +1,156 @@
 package org.firstinspires.ftc.teamcode.autos;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import java.util.List;
 
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.robot.Arm;
+import org.firstinspires.ftc.teamcode.robot.DriveTrain;
+import org.firstinspires.ftc.teamcode.robot.Hand;
 import org.firstinspires.ftc.teamcode.robot.PropDetector;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class VisionAutio instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
-@TeleOp(name="Vision Auto", group="")
-@Disabled
+@Autonomous(name = "Autonomous", group = "")
 public class VisionAuto extends LinearOpMode {
 
     // Declare OpMode members.
-    private PropDetector pd = new PropDetector(hardwareMap, true);
+    private PropDetector pd;
     private ElapsedTime detectTime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-    private List<Recognition> recs;
+    private ElapsedTime waitTime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+    private DriveTrain dt;
+    private Arm arm;
+    private Hand hand;
+    private boolean isRedAlliance = false;
+    private boolean isFar = false;
+
+    enum PropZones {
+
+        LEFT,
+        CENTER,
+        RIGHT
+
+    }
 
     @Override
     public void runOpMode() {
+
+        pd = new PropDetector(hardwareMap, true);
+        dt = new DriveTrain(hardwareMap, 0, 0, 0);
+        arm = new Arm(hardwareMap);
+        hand = new Hand(hardwareMap);
+
+        hand.clamp(true, true);
+
+        Recognition bestRec = null;
 
         detectTime.reset();
 
         while (opModeInInit()) {
 
-            recs = pd.getRecognitions();
-
-            if (recs != null) {
-                break;
-            }
+            bestRec = pd.getBestRecognitions();
 
             telemetry.addData("DETECTING PROP...", detectTime.seconds());
             telemetry.update();
 
         }
 
-        Recognition bestRec = pd.getBestRecognitions();
-
-        telemetry.addData("FOUND!", bestRec.getLeft());
-        telemetry.update();
-
-
         waitForStart();
 
+        double purplePixelAngle;
 
-        while (opModeIsActive()) {
+        PropZones propZone;
 
-            telemetry.addLine("yeah woo yeah we're moving oh yeah");
-
-            telemetry.update();
-
+        try {
+            int point = (int) ((bestRec.getLeft() + bestRec.getRight()) / 2);
+            if (point < 250) {
+                propZone = PropZones.CENTER;
+                purplePixelAngle = 0;
+            } else {
+                propZone = PropZones.RIGHT;
+                purplePixelAngle = 0.56;
+            }
+        } catch (NullPointerException e) {
+            propZone = PropZones.LEFT;
+            purplePixelAngle = -0.76;
         }
+
+        telemetry.addData("Prop detected in", propZone);
+        telemetry.update();
+
+        telemetry.addLine("Driving to spike marks");
+        telemetry.update();
+        dt.driveToPosition(0, 20, 0.5, 0.5);
+        
+        
+        // waitTime.reset();
+        // while(waitTime.time() < 4 ){
+
+        // }
+
+        telemetry.addData("Aligning to angle", purplePixelAngle);
+        telemetry.update();
+        dt.autoAlign(purplePixelAngle);
+
+        
+        // waitTime.reset();
+        // while(waitTime.time() < 2 ){
+
+        // }
+
+        
+        telemetry.addLine("forubaring?");
+        telemetry.update();
+
+        
+        arm.setFourbarPos(120);
+
+
+        // waitTime.reset();
+        // while(waitTime.time() < 2 ){
+
+        // }
+        
+        telemetry.addLine("arming?");
+        telemetry.update();
+        arm.setArmPos(560);
+
+        
+        // waitTime.reset();
+        // while(waitTime.time() < 2 ){
+
+        // }
+
+        telemetry.addLine("Releasing Pixel");
+        telemetry.update();
+        hand.clamp(true, false);
+        
+        
+        // waitTime.reset();
+        // while(waitTime.time() < 1 ){
+
+        // }
+
+        telemetry.addLine("Aligning to audience");
+        telemetry.update();
+        dt.autoAlign(isRedAlliance ? Math.PI/2 : -Math.PI / 2);
+
+        
+        // waitTime.reset();
+        // while(waitTime.time() < 4 ){
+
+        // }
+
+        if(!isFar){
+        telemetry.addLine("Parking");
+        telemetry.update();
+        dt.driveToPosition(isRedAlliance ? 40 :-40, 5, 0.75, 1);
+        }
+        telemetry.addLine("Arm Extending");
+        telemetry.update();
+        waitTime.reset();
+        while (waitTime.seconds() < 4) {
+            arm.extend(0.75);
+        }
+
     }
 }

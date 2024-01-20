@@ -72,7 +72,6 @@ public class Dashboard extends OpMode implements Constants {
         telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
         telemetry.addData("x", dt.getX());
         telemetry.addData("y", dt.getY());
-        telemetry.addData("points read from json", null);
         telemetry.update();
     }
 }

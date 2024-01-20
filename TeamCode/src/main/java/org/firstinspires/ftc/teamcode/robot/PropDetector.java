@@ -70,7 +70,7 @@ public class PropDetector {
 
         this.hwMap = hwMap;
 
-        TFOD_MODEL_ASSET = "bluePropMeta.tflite";
+        TFOD_MODEL_ASSET = "uniPropV1.tflite";
 
         initTfod();
 
@@ -115,15 +115,13 @@ public class PropDetector {
 
         List<Recognition> recsList = new ArrayList<Recognition>();
 
-        for (Recognition rec : currentRecognitions) {
-
-            if (rec.getConfidence() > bestRecConf) {
-                recsList.add(rec);
-            }
-
-        }
-
         try {
+            for (Recognition rec : currentRecognitions) {
+
+                if (rec.getConfidence() > bestRecConf) {
+                    recsList.add(rec);
+                }
+            }
             return recsList.get(recsList.size() - 1);
         } catch (Exception e) {
             return null;

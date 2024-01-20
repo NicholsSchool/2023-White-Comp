@@ -14,8 +14,7 @@ public class DriveTrain implements Constants{
 
     //each motor is hooked up to their dead-wheel
     public DcMotorEx frontLeft, frontRight, backLeft, backRight;
-    public AHRS navx;
-    public Servo ppp;
+    private AHRS navx;
     HardwareMap hwMap;
     //odometry stuff
     public double x, y;
@@ -36,8 +35,6 @@ public class DriveTrain implements Constants{
         frontRight = hwMap.get(DcMotorEx.class, "frontRight");
         backLeft = hwMap.get(DcMotorEx.class, "backLeft");
         backRight = hwMap.get(DcMotorEx.class, "backRight");
-
-        ppp = hwMap.get(Servo.class, "pixelPooper");
 
         navx = AHRS.getInstance(hwMap.get(NavxMicroNavigationSensor.class, "navx"), AHRS.DeviceDataType.kProcessedData);
 
@@ -75,8 +72,15 @@ public class DriveTrain implements Constants{
         backRight.setPower(highGear ? HIGH_GEAR * backRightPower : LOW_GEAR * backRightPower);
     }
 
-    public void pooperToPosition(double pooperPosition) {
-        ppp.setPosition(pooperPosition);
+
+    public void autoAlign(double desiredAngle){
+        
+        double error = SplineMath.addAngles(getHeadingNavX(), -desiredAngle);
+        while (Math.abs(error) >  0.1) {
+            drive(0, 0, error, false);
+            error = SplineMath.addAngles(getHeadingNavX(), -desiredAngle);
+        }
+        return;
     }
 
     public double getHeadingNavX() {
@@ -112,17 +116,16 @@ public class DriveTrain implements Constants{
 
     }
 
-    public boolean driveToPosition(double x, double y, double power, double returnThreshold){
+    public void driveToPosition(double x, double y, double power, double returnThreshold){
 
+        while (Math.abs(x - this.x) > returnThreshold && Math.abs(y - this.y) > returnThreshold) {
+            updateWithOdometry();
             double slope = (this.y - y) / (this.x - x); 
             double angle = (this.x - x) < 0 ? Math.atan(slope) : Calculator.addAngles(Math.atan(slope), Math.PI);
             drive(power, angle, 0, true);
-
-            updateWithOdometry();
-
-            return (((x - returnThreshold) < this.x && this.x < (x + returnThreshold) && (y - returnThreshold) < this.y && this.y < (y + returnThreshold)));
-        
         }
+        return;
+    }
 
     public double getX(){
         return x;
