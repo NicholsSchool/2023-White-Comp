@@ -82,20 +82,20 @@ public class VisionAuto extends LinearOpMode {
         dt.driveToPosition(0, 20, 0.5, 0.5);
         
         
-        // waitTime.reset();
-        // while(waitTime.time() < 4 ){
+        waitTime.reset();
+        while(waitTime.time() < 4 ){
 
-        // }
+        }
 
         telemetry.addData("Aligning to angle", purplePixelAngle);
         telemetry.update();
         dt.autoAlign(purplePixelAngle);
 
         
-        // waitTime.reset();
-        // while(waitTime.time() < 2 ){
+        waitTime.reset();
+        while(waitTime.time() < 2 ){
 
-        // }
+        }
 
         
         telemetry.addLine("forubaring?");
@@ -105,40 +105,40 @@ public class VisionAuto extends LinearOpMode {
         arm.setFourbarPos(120);
 
 
-        // waitTime.reset();
-        // while(waitTime.time() < 2 ){
+        waitTime.reset();
+        while(waitTime.time() < 2 ){
 
-        // }
+        }
         
         telemetry.addLine("arming?");
         telemetry.update();
         arm.setArmPos(560);
 
         
-        // waitTime.reset();
-        // while(waitTime.time() < 2 ){
+        waitTime.reset();
+        while(waitTime.time() < 2 ){
 
-        // }
+        }
 
         telemetry.addLine("Releasing Pixel");
         telemetry.update();
         hand.clamp(true, false);
         
         
-        // waitTime.reset();
-        // while(waitTime.time() < 1 ){
+        waitTime.reset();
+        while(waitTime.time() < 1 ){
 
-        // }
+        }
 
         telemetry.addLine("Aligning to audience");
         telemetry.update();
         dt.autoAlign(isRedAlliance ? Math.PI/2 : -Math.PI / 2);
 
         
-        // waitTime.reset();
-        // while(waitTime.time() < 4 ){
+        waitTime.reset();
+        while(waitTime.time() < 4 ){
 
-        // }
+        }
 
         if(!isFar){
         telemetry.addLine("Parking");

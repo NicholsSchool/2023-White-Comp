@@ -76,8 +76,8 @@ public class DriveTrain implements Constants{
     public void autoAlign(double desiredAngle){
         
         double error = SplineMath.addAngles(getHeadingNavX(), -desiredAngle);
-        while (Math.abs(error) >  0.1) {
-            drive(0, 0, error, false);
+        while (Math.abs(error) >  0.3) {
+            drive(0, 0, error * 0.5, false);
             error = SplineMath.addAngles(getHeadingNavX(), -desiredAngle);
         }
         return;
@@ -118,10 +118,10 @@ public class DriveTrain implements Constants{
 
     public void driveToPosition(double x, double y, double power, double returnThreshold){
 
-        while (Math.abs(x - this.x) > returnThreshold && Math.abs(y - this.y) > returnThreshold) {
+        while ( !((x - returnThreshold) < this.x && this.x < (x + returnThreshold) && (y - returnThreshold) < this.y && this.y < (y + returnThreshold))) {
             updateWithOdometry();
             double slope = (this.y - y) / (this.x - x); 
-            double angle = (this.x - x) < 0 ? Math.atan(slope) : Calculator.addAngles(Math.atan(slope), Math.PI);
+            double angle = this.x < x ? Math.atan(slope) : Calculator.addAngles(Math.atan(slope), Math.PI);
             drive(power, angle, 0, true);
         }
         return;
