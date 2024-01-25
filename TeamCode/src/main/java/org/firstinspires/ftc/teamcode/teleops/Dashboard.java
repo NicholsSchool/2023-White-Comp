@@ -70,6 +70,8 @@ public class Dashboard extends OpMode implements Constants {
         telemetry.addData("armPos", armPos);
         telemetry.addData("fourbarPos", fourbarPos);
         telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
+        telemetry.addData("leftServo", leftPos);
+        telemetry.addData("rightServo", rightPos);
         telemetry.addData("x", dt.getX());
         telemetry.addData("y", dt.getY());
         telemetry.update();

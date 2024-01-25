@@ -4,11 +4,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.utils.*;
 public class Arm implements Constants{
     public DcMotorEx leftArm, rightArm, fourbar, winch;
     public Servo plane;
+    private ElapsedTime timeout = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
 
     HardwareMap hwMap;
 
@@ -62,10 +64,12 @@ public class Arm implements Constants{
     
     public void setFourbarPos(int targetPos) {
         double error = targetPos - fourBarPos();
-        while (Math.abs(error) > 15){
+        timeout.reset();
+        while (Math.abs(error) > 15 && timeout.time() < 4){
             error = targetPos - fourBarPos();
-            fourbarPower(error * 0.003);
+            fourbarPower(error * 0.008);
         }
+        fourbarPower(0);
         
     }
 
@@ -73,9 +77,9 @@ public class Arm implements Constants{
         double error = targetPos - armPos();
         while (Math.abs(error) > 15){
             error = targetPos - armPos();
-            setPower(error * 0.001);
+            setPower(error * -0.001);
         }
-        
+        setPower(0);
     }
 
     public int armPos() {

@@ -28,12 +28,18 @@ public class RobotContainer implements Constants {
      * @param g2          gamepad2
      */
     public RobotContainer(HardwareMap hwMap, boolean planeLaunch, Gamepad g1, Gamepad g2, boolean isRedAlliance) {
-        drivetrain = new DriveTrain(hwMap, 0, 0 , isRedAlliance ? Math.PI/2 : -Math.PI / 2);
+        drivetrain = new DriveTrain(hwMap, 0, 0 ,
+        //isRedAlliance ? Math.PI/2 : -Math.PI / 2
+        0
+        );
         hand = new Hand(hwMap);
+        hand.clamp(true, true);
         arm = new Arm(hwMap);
         power = 0.0;
         angle = 0.0;
         turn = 0.0;
+        leftClamped = true;
+        rightClamped = true;
         armPower = 0.0;
         extendPower = 0.0;
         highGear = false;
@@ -84,6 +90,10 @@ public class RobotContainer implements Constants {
         arm.fourbarPower(operatorOI.right_stick_y.get());
 
         hand.clamp(leftClamped, rightClamped);
+
+        if (driverOI.dpad_up.wasJustPressed()) {
+            drivetrain.resetIMU();
+        }
 
         if (operatorOI.dpad_up.get()) {
             planeLaunch = true;

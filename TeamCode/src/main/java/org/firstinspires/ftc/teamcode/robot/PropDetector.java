@@ -48,7 +48,8 @@ import java.util.List;
 public class PropDetector {
 
     private static final String[] LABELS = {
-            "Prop",
+            "blueProp",
+            "redProp",
     };
 
     private static String TFOD_MODEL_ASSET;

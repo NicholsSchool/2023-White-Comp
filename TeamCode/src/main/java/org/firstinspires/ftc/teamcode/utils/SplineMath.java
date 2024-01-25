@@ -9,12 +9,12 @@ public class SplineMath {
      */
     public static double addAngles(double angleOne, double angleTwo){
         double sum = angleOne + angleTwo;
-        if(sum > Math.PI){
+        while (sum > Math.PI) {
             sum = sum - 2 * Math.PI;
-        }else if(sum < -Math.PI){
+        }
+        while (sum < -Math.PI) {
             sum = sum + 2 * Math.PI;
         }
-
         return sum;
     }
 

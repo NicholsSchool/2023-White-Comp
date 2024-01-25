@@ -75,12 +75,13 @@ public class DriveTrain implements Constants{
 
     public void autoAlign(double desiredAngle){
         
-        double error = SplineMath.addAngles(getHeadingNavX(), -desiredAngle);
-        while (Math.abs(error) >  0.3) {
-            drive(0, 0, error * 0.5, false);
-            error = SplineMath.addAngles(getHeadingNavX(), -desiredAngle);
+        double alignError =  SplineMath.addAngles(desiredAngle, -getHeadingNavX());
+        while (Math.abs(alignError) > 0.05) {
+            alignError = SplineMath.addAngles(desiredAngle, -getHeadingNavX());
+            drive(0,0,alignError * 0.5, false);
         }
-        return;
+        drive(0, 0, 0, false);
+
     }
 
     public double getHeadingNavX() {
@@ -124,6 +125,9 @@ public class DriveTrain implements Constants{
             double angle = this.x < x ? Math.atan(slope) : Calculator.addAngles(Math.atan(slope), Math.PI);
             drive(power, angle, 0, true);
         }
+
+        drive(0, 0, 0, false);
+
         return;
     }
 
@@ -132,7 +136,10 @@ public class DriveTrain implements Constants{
     }
     public double getY(){
         return y;
+    }
 
+    public void resetIMU() {
+        navx.zeroYaw();
     }
 
 }

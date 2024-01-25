@@ -20,7 +20,7 @@ public class VisionAuto extends LinearOpMode {
     private DriveTrain dt;
     private Arm arm;
     private Hand hand;
-    private boolean isRedAlliance = false;
+    private boolean isRedAlliance = true;
     private boolean isFar = false;
 
     enum PropZones {
@@ -77,79 +77,46 @@ public class VisionAuto extends LinearOpMode {
         telemetry.addData("Prop detected in", propZone);
         telemetry.update();
 
-        telemetry.addLine("Driving to spike marks");
-        telemetry.update();
-        dt.driveToPosition(0, 20, 0.5, 0.5);
-        
-        
         waitTime.reset();
-        while(waitTime.time() < 4 ){
+        while (waitTime.time() < 1) {
 
         }
 
-        telemetry.addData("Aligning to angle", purplePixelAngle);
-        telemetry.update();
-        dt.autoAlign(purplePixelAngle);
+        // telemetry.addLine("Driving to spike marks...");
+        // telemetry.update();
+        // dt.driveToPosition(0, 20, 0.5, 0.5);
 
-        
-        waitTime.reset();
-        while(waitTime.time() < 2 ){
+        // telemetry.addData("Aligning to angle", purplePixelAngle);
+        // telemetry.update();
+        // dt.autoAlign(purplePixelAngle);
 
+        // telemetry.addLine("Rotating Fourbar...");
+        // telemetry.update();
+        // arm.setFourbarPos(120);
+
+        // telemetry.addLine("Rotating Arm...");
+        // telemetry.update();
+        // arm.setArmPos(560);
+
+        // telemetry.addLine("Releasing Pixel...");
+        // telemetry.update();
+        // hand.clamp(true, false);
+
+        // telemetry.addLine("Aligning to audience");
+        // telemetry.update();
+        // dt.autoAlign(isRedAlliance ? Math.PI / 2 : -Math.PI / 2);
+
+        if (!isFar) {
+            telemetry.addLine("Parking");
+            telemetry.update();
+            dt.driveToPosition(isRedAlliance ? 20 : -20, 5, 0.75, 1);
         }
 
-        
-        telemetry.addLine("forubaring?");
-        telemetry.update();
-
-        
-        arm.setFourbarPos(120);
-
-
-        waitTime.reset();
-        while(waitTime.time() < 2 ){
-
-        }
-        
-        telemetry.addLine("arming?");
-        telemetry.update();
-        arm.setArmPos(560);
-
-        
-        waitTime.reset();
-        while(waitTime.time() < 2 ){
-
-        }
-
-        telemetry.addLine("Releasing Pixel");
-        telemetry.update();
-        hand.clamp(true, false);
-        
-        
-        waitTime.reset();
-        while(waitTime.time() < 1 ){
-
-        }
-
-        telemetry.addLine("Aligning to audience");
-        telemetry.update();
-        dt.autoAlign(isRedAlliance ? Math.PI/2 : -Math.PI / 2);
-
-        
-        waitTime.reset();
-        while(waitTime.time() < 4 ){
-
-        }
-
-        if(!isFar){
-        telemetry.addLine("Parking");
-        telemetry.update();
-        dt.driveToPosition(isRedAlliance ? 40 :-40, 5, 0.75, 1);
-        }
         telemetry.addLine("Arm Extending");
         telemetry.update();
         waitTime.reset();
         while (waitTime.seconds() < 4) {
-            arm.extend(0.75);
+            arm.extend(0.25);
         }
 
     }

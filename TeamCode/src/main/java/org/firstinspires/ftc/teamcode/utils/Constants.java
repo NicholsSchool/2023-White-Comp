@@ -37,9 +37,6 @@ public interface Constants {
     /** Left clamp position when not clamping */
     double LEFT_UNCLAMPED = 0;
 
-    
-
-
     /** Right clamp position when not clamping */
     double RIGHT_UNCLAMPED = 0.3;
 
