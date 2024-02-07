@@ -4,7 +4,6 @@ import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.kauailabs.navx.ftc.AHRS;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.utils.*;
 
@@ -18,7 +17,7 @@ public class DriveTrain implements Constants{
     HardwareMap hwMap;
     //odometry stuff
     public double x, y;
-    private int lastFR, lastFL, lastBR, lastBL;
+    private int lastFR, lastFL;
     private final double angleOffset;
 
 
@@ -94,25 +93,19 @@ public class DriveTrain implements Constants{
     }
 
     public void updateWithOdometry(){
-        int currentFR = frontRight.getCurrentPosition();
         int currentFL = frontLeft.getCurrentPosition();
-        int currentBR = backRight.getCurrentPosition();
-        int currentBL = backLeft.getCurrentPosition();
+        int currentFR = frontRight.getCurrentPosition();
 
         int deltaFR = currentFR - lastFR;
         int deltaFL = currentFL - lastFL;
-        int deltaBR = currentBR - lastBR;
-        int deltaBL = currentBL - lastBL;
 
-        double deltaY = (deltaBL - deltaFR) / 2 * ODOMETRY_X_CORRECTOR;
-        double deltaX = -(deltaFL - deltaBR) / 2 * ODOMETRY_Y_CORRECTOR;
+        double deltaY = deltaFL * ODOMETRY_X_CORRECTOR;
+        double deltaX = deltaFR * ODOMETRY_Y_CORRECTOR;
 
         y += deltaX * Math.cos(getHeadingNavX()) + deltaY * Math.sin(getHeadingNavX());
         x += deltaX * Math.sin(getHeadingNavX()) + deltaY * Math.cos(getHeadingNavX());
 
         lastFR = currentFR;
-        lastBL = currentBL;
-        lastBR = currentBR;
         lastFL = currentFL;
 
     }

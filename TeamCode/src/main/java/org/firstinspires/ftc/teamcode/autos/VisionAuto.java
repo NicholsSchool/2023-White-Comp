@@ -116,7 +116,7 @@ public class VisionAuto extends LinearOpMode {
         telemetry.update();
         waitTime.reset();
         while (waitTime.seconds() < 4) {
-            arm.extend(0.25);
+            arm.extendWinch(0.25);
         }
 
     }

@@ -53,7 +53,7 @@ public class Dashboard extends OpMode implements Constants {
     public void loop() {
 
         double armPos = arm.armPos();
-        double fourbarPos = arm.fourBarPos();
+        double wristPos = arm.wristPos();
         double leftPos = hand.leftClamp.getPosition();
         double rightPos = hand.rightClamp.getPosition();
 
@@ -68,7 +68,7 @@ public class Dashboard extends OpMode implements Constants {
         driverOI.updateValues();
 
         telemetry.addData("armPos", armPos);
-        telemetry.addData("fourbarPos", fourbarPos);
+        telemetry.addData("wrist Position", wristPos);
         telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
         telemetry.addData("leftServo", leftPos);
         telemetry.addData("rightServo", rightPos);

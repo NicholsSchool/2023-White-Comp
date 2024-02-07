@@ -72,9 +72,9 @@ public class RobotContainer implements Constants {
         drivetrain.drive(power, angle, turn, highGear);
 
         arm.setPower(armPower);
-        arm.extend(-extendPower);
+        arm.extendWinch(-extendPower);
         //arm.fourbarUpdate(-400);
-        arm.fourbarPower(operatorOI.right_stick_y.get());
+        arm.wristPower(operatorOI.right_stick_y.get());
         if (operatorOI.x.wasJustReleased()) {
             leftClamped = !leftClamped;
         }
@@ -87,7 +87,7 @@ public class RobotContainer implements Constants {
             rightClamped = !rightClamped;
         }
 
-        arm.fourbarPower(operatorOI.right_stick_y.get());
+        arm.wristPower(operatorOI.right_stick_y.get());
 
         hand.clamp(leftClamped, rightClamped);
 
