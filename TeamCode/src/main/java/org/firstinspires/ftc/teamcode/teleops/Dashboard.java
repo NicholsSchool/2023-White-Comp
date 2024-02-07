@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.util.Arrays;
 
 import org.firstinspires.ftc.teamcode.controller.GameController;
-import org.firstinspires.ftc.teamcode.robot.ATPoseCalculator;
 import org.firstinspires.ftc.teamcode.robot.Arm;
 import org.firstinspires.ftc.teamcode.robot.DriveTrain;
 import org.firstinspires.ftc.teamcode.robot.Hand;
@@ -25,7 +24,6 @@ import org.firstinspires.ftc.teamcode.utils.VectorPath;
 public class Dashboard extends OpMode implements Constants {
     public DriveTrain dt;
     public Arm arm;
-    public ATPoseCalculator at;
     public Hand hand;
     public static double leftClamp;
     public static double rightClamp;
@@ -39,7 +37,6 @@ public class Dashboard extends OpMode implements Constants {
         hand = new Hand(hardwareMap);
         arm = new Arm(hardwareMap);
         dt = new DriveTrain(hardwareMap, 0, 0, 0);
-        at = new ATPoseCalculator(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         driverOI = new GameController(gamepad1);
         vecpath = new VectorPath(hardwareMap, "robot_oriented_test.json");
@@ -61,11 +58,17 @@ public class Dashboard extends OpMode implements Constants {
 
         arm.setPower(armPower);
 
-        arm.fourbarUpdate(fourbarPower);
-
         dt.updateWithOdometry();
 
         driverOI.updateValues();
+
+        if ( driverOI.dpad_up.wasJustPressed() ) {
+            dt.autoAlign(0);
+        }
+
+        if (driverOI.dpad_down.wasJustPressed()) {
+            dt.autoAlign(Math.PI / 2);
+        }
 
         telemetry.addData("armPos", armPos);
         telemetry.addData("wrist Position", wristPos);

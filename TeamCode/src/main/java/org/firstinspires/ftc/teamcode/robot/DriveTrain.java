@@ -17,7 +17,7 @@ public class DriveTrain implements Constants{
     HardwareMap hwMap;
     //odometry stuff
     public double x, y;
-    private int lastFR, lastFL;
+    private int lastBR, lastBL;
     private final double angleOffset;
 
 
@@ -74,9 +74,9 @@ public class DriveTrain implements Constants{
 
     public void autoAlign(double desiredAngle){
         
-        double alignError =  SplineMath.addAngles(desiredAngle, -getHeadingNavX());
+        double alignError =  Calculator.addAngles(desiredAngle, -getHeadingNavX());
         while (Math.abs(alignError) > 0.05) {
-            alignError = SplineMath.addAngles(desiredAngle, -getHeadingNavX());
+            alignError = Calculator.addAngles(desiredAngle, -getHeadingNavX());
             drive(0,0,alignError * 0.5, false);
         }
         drive(0, 0, 0, false);
@@ -85,28 +85,25 @@ public class DriveTrain implements Constants{
 
     public double getHeadingNavX() {
         
-        double heading;
+        return Math.toRadians((double) (navx.getYaw()));
 
-        heading = Math.toRadians((double) (navx.getYaw()));
-
-        return heading;
     }
 
     public void updateWithOdometry(){
-        int currentFL = frontLeft.getCurrentPosition();
-        int currentFR = frontRight.getCurrentPosition();
+        int currentBL = backLeft.getCurrentPosition();
+        int currentBR = backRight.getCurrentPosition();
 
-        int deltaFR = currentFR - lastFR;
-        int deltaFL = currentFL - lastFL;
+        int deltaBR = currentBR - lastBR;
+        int deltaBL = currentBL - lastBL;
 
-        double deltaY = deltaFL * ODOMETRY_X_CORRECTOR;
-        double deltaX = deltaFR * ODOMETRY_Y_CORRECTOR;
+        double deltaY = deltaBL * ODOMETRY_X_CORRECTOR;
+        double deltaX = deltaBR * ODOMETRY_Y_CORRECTOR;
 
         y += deltaX * Math.cos(getHeadingNavX()) + deltaY * Math.sin(getHeadingNavX());
         x += deltaX * Math.sin(getHeadingNavX()) + deltaY * Math.cos(getHeadingNavX());
 
-        lastFR = currentFR;
-        lastFL = currentFL;
+        lastBR = currentBR;
+        lastBL = currentBL;
 
     }
 

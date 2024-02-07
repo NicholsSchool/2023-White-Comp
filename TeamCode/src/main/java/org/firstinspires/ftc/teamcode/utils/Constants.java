@@ -55,46 +55,6 @@ public interface Constants {
     /** Horizontal distance of AT Camera from Center of Robot */
     double CAM_Y_DIST = 0;
 
-    // thanks anthony :D
-
-    /** X Coordinate of Intake Side April Tags */
-    double APRIL_TAG_INTAKE_X = 72;
-
-    /** Y Coordinate of Tag #7 */
-    double APRIL_TAG_7_Y = 42;
-
-    /** Y Coordinate of Tag #8 */
-    double APRIL_TAG_8_Y = 36;
-
-    /** Y Coordinate of Tag #9 */
-    double APRIL_TAG_9_Y = -36;
-
-    /** Y Coordinate of Tag #10 */
-    double APRIL_TAG_10_Y = -42;
-
-    /** X Coordinate of Scoring Side April Tags */
-    double APRIL_TAG_SCORING_X = -61.5;
-
-    /** Y Coordinate of Tag #1 */
-    double APRIL_TAG_1_Y = -42;
-
-    /** Y Coordinate of Tag #2 */
-    double APRIL_TAG_2_Y = -36;
-
-    /** Y Coordinate of Tag #3 */
-    double APRIL_TAG_3_Y = -30;
-
-    /** Y Coordinate of Tag #4 */
-    double APRIL_TAG_4_Y = 30;
-
-    /** Y Coordinate of Tag #5 */
-    double APRIL_TAG_5_Y = 36;
-
-    /** Y Coordinate of Tag #6 */
-    double APRIL_TAG_6_Y = 42;
-
-    //end of thanks anthony D:
-
     double AUTO_DT_POWER = 0.5;
 
     double AUTO_PROP_LEFTBOUND = 213;
@@ -102,15 +62,6 @@ public interface Constants {
     double AUTO_PROP_RIGHTBOUND = 427;
 
     int AUTO_FB_POS = 105;
-
-    double PROP_LEFT_X = 0.0;
-    double PROP_LEFT_Y = 0.0;
-
-    double PROP_CENTER_X = 0.0;
-    double PROP_CENTER_Y = 0.0;
-
-    double PROP_RIGHT_X = 0.0;
-    double PROP_RIGHT_Y = 0.0;
 
     double FB_POS_MULT = 0.08;
 

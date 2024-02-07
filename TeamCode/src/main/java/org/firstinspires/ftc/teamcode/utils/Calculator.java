@@ -9,14 +9,14 @@ public class Calculator implements Constants {
      *
      * @param angle1 the first angle
      * @param angle2 the second angle
-     * @return the sum in the range [-180, 180)
+     * @return the sum in the range [-Pi, Pi]
      */
     public static double addAngles(double angle1, double angle2) {
         double sum = angle1 + angle2;
-        while(sum >= 180.0)
-            sum -= 360.0;
-        while(sum < -180.0)
-            sum += 360.0;
+        while(sum >= Math.PI)
+            sum -= 2 * Math.PI;
+        while(sum < -Math.PI)
+            sum += 2 * Math.PI;
         return sum;
     }
 }

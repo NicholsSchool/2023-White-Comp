@@ -53,14 +53,6 @@ public class Arm implements Constants{
     public void wristPower(double power){
         wrist.setPower(power * FB_POWER_MULT);
     }
-
-    public void fourbarUpdate(double velocity){
-        wrist.setTargetPosition((int)(armPos() * FB_POS_MULT));
-        wrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        wrist.setVelocity(velocity);
-    }
-
-
     
     public void setFourbarPos(int targetPos) {
         double error = targetPos - wristPos();

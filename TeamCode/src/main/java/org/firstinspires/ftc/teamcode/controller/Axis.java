@@ -39,15 +39,6 @@ public class Axis implements Constants {
         return value;
     }
 
-    /**
-     * Whether the Axis has been zero for
-     * a specified number of loops of the code
-     *
-     * @return true iff the Axis has been zero for enough loops
-     */
-    public boolean hasBeenZeroForEnoughTime() {
-        return loopsAtZero >= LOOPS_TO_WAIT;
-    }
 
     /**
      * Updates the axis's current and previous values
