@@ -59,18 +59,17 @@ public class DriveTrain implements Constants{
     }
 
     public void drive(double power, double angle, double turn, boolean highGear){
-        double kReorient = (Math.PI / 4) + getHeadingNavX() + angleOffset;
-        double frontLeftPower = -power * Math.sin(angle + kReorient) - turn * TURN_LIMITER;
-        double frontRightPower = -power * Math.cos(angle + kReorient) - turn * TURN_LIMITER;
-        double backLeftPower = power * Math.cos(angle + kReorient) - turn * TURN_LIMITER;
-        double backRightPower = power * Math.sin(angle + kReorient) - turn * TURN_LIMITER;
+        double kReorient = ((3 * Math.PI) / 4 + getHeadingNavX()) + angleOffset;
+        double frontLeftPower = power * Math.cos(angle + kReorient) - turn * TURN_LIMITER;
+        double frontRightPower = -power * Math.sin(angle + kReorient) - turn * TURN_LIMITER;
+        double backLeftPower = power * Math.sin(angle + kReorient) - turn * TURN_LIMITER;
+        double backRightPower = -power * Math.cos(angle + kReorient) - turn * TURN_LIMITER;
 
         frontLeft.setPower(highGear ? HIGH_GEAR * frontLeftPower : LOW_GEAR * frontLeftPower);
         frontRight.setPower(highGear ? HIGH_GEAR * frontRightPower : LOW_GEAR * frontRightPower);
         backLeft.setPower(highGear ? HIGH_GEAR * backLeftPower : LOW_GEAR * backLeftPower);
         backRight.setPower(highGear ? HIGH_GEAR * backRightPower : LOW_GEAR * backRightPower);
     }
-
 
     public void autoAlign(double desiredAngle){
         

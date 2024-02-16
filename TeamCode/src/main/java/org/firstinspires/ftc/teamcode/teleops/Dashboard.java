@@ -6,8 +6,6 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import java.util.Arrays;
-
 import org.firstinspires.ftc.teamcode.controller.GameController;
 import org.firstinspires.ftc.teamcode.robot.Arm;
 import org.firstinspires.ftc.teamcode.robot.DriveTrain;
@@ -25,12 +23,11 @@ public class Dashboard extends OpMode implements Constants {
     public DriveTrain dt;
     public Arm arm;
     public Hand hand;
-    public static double leftClamp;
-    public static double rightClamp;
     public static double fourbarPower;
     private GameController driverOI;
     public static int fourbarTarget;
     public static double armPower;
+    public double fLPower, fRPower, bLPower, bRPower;
     public VectorPath vecpath;
     @Override
     public void init() {
@@ -54,7 +51,10 @@ public class Dashboard extends OpMode implements Constants {
         double leftPos = hand.leftClamp.getPosition();
         double rightPos = hand.rightClamp.getPosition();
 
-        hand.handTest(leftClamp, rightClamp);
+        dt.frontLeft.setPower(driverOI.y.get() ? 1.0 : 0.0);
+        dt.frontRight.setPower(driverOI.x.get() ? 1.0 : 0.0);
+        dt.backLeft.setPower(driverOI.a.get() ? 1.0 : 0.0);
+        dt.backRight.setPower(driverOI.b.get() ? 1.0 : 0.0);
 
         arm.setPower(armPower);
 
@@ -62,13 +62,7 @@ public class Dashboard extends OpMode implements Constants {
 
         driverOI.updateValues();
 
-        if ( driverOI.dpad_up.wasJustPressed() ) {
-            dt.autoAlign(0);
-        }
-
-        if (driverOI.dpad_down.wasJustPressed()) {
-            dt.autoAlign(Math.PI / 2);
-        }
+        
 
         telemetry.addData("armPos", armPos);
         telemetry.addData("wrist Position", wristPos);
