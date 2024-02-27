@@ -85,6 +85,7 @@ public class SensorNavXProcessedOp extends OpMode {
       telemetry.addData("4 Magnetometer", magcal );
       telemetry.addData("5 Compass,9Axis", cf );
       telemetry.addData("6 Motion", motion);
+      telemetry.addData("7 Board Yaw Axis", navx_device.getBoardYawAxis().board_axis.name());
   }
 
 }

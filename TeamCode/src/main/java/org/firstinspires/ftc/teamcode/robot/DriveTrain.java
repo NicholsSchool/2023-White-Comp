@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 import com.kauailabs.navx.ftc.AHRS;
 
 import org.firstinspires.ftc.teamcode.utils.*;
@@ -84,8 +85,18 @@ public class DriveTrain implements Constants{
     }
 
     public double getHeadingNavX() {
-        
-        return Math.toRadians((double) (navx.getRoll())); //TODO: WHY IS THIS ROLL!?!?!?!!!?!?
+
+        switch (navx.getBoardYawAxis().board_axis.name()) {
+
+            case "kBoardAxisX":
+                return Math.toRadians((double) (navx.getRoll()));
+            
+            case "kBoardAxisY":
+                return Math.toRadians((double) (navx.getPitch()));
+
+            default:
+                return Math.toRadians((double) (navx.getYaw()));
+        }
 
     }
 

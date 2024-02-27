@@ -16,7 +16,7 @@ public class VisionTest extends OpMode {
 
     public void init() {
 
-        pd = new PropDetector(hardwareMap, false);
+        pd = new PropDetector(hardwareMap);
 
     }
     

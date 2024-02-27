@@ -136,7 +136,7 @@ public class VectorPath {
 
         for (double[] point : points) {
             
-            dt.driveToPosition(point[0], point[1], 0.8, 0.1);
+            dt.driveToPosition(point[0], point[1], 0.8, 1, 0.1, false);
 
         }
 
