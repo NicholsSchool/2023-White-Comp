@@ -37,6 +37,7 @@ public class Dashboard extends OpMode implements Constants {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         driverOI = new GameController(gamepad1);
         vecpath = new VectorPath(hardwareMap, "robot_oriented_test.json");
+        dt.resetIMU();
     }
 
     public void start() {
@@ -62,13 +63,13 @@ public class Dashboard extends OpMode implements Constants {
 
         driverOI.updateValues();
 
-        
-
         telemetry.addData("armPos", armPos);
         telemetry.addData("wrist Position", wristPos);
-        telemetry.addData("Yaw from AHRS", dt.getHeadingNavX());
+        telemetry.addData("RAW Yaw from AHRS", dt.getHeadingNavX());
         telemetry.addData("leftServo", leftPos);
         telemetry.addData("rightServo", rightPos);
+        telemetry.addData("raw f/b odom val", dt.backLeft.getCurrentPosition());
+        telemetry.addData("raw l/r odom val", dt.backRight.getCurrentPosition());
         telemetry.addData("x", dt.getX());
         telemetry.addData("y", dt.getY());
         telemetry.update();

@@ -13,7 +13,7 @@ public class DriveTrain implements Constants{
 
     //each motor is hooked up to their dead-wheel
     public DcMotorEx frontLeft, frontRight, backLeft, backRight;
-    private AHRS navx;
+    public AHRS navx;
     HardwareMap hwMap;
     //odometry stuff
     public double x, y;
@@ -36,6 +36,7 @@ public class DriveTrain implements Constants{
         backRight = hwMap.get(DcMotorEx.class, "backRight");
 
         navx = AHRS.getInstance(hwMap.get(NavxMicroNavigationSensor.class, "navx"), AHRS.DeviceDataType.kProcessedData);
+        
 
         frontLeft.setDirection(DcMotorEx.Direction.FORWARD);
         frontRight.setDirection(DcMotorEx.Direction.FORWARD);
@@ -84,7 +85,7 @@ public class DriveTrain implements Constants{
 
     public double getHeadingNavX() {
         
-        return Math.toRadians((double) (navx.getYaw()));
+        return Math.toRadians((double) (navx.getRoll())); //TODO: WHY IS THIS ROLL!?!?!?!!!?!?
 
     }
 
@@ -98,8 +99,8 @@ public class DriveTrain implements Constants{
         double deltaY = deltaBL * ODOMETRY_X_CORRECTOR;
         double deltaX = deltaBR * ODOMETRY_Y_CORRECTOR;
 
-        y += deltaX * Math.cos(getHeadingNavX()) + deltaY * Math.sin(getHeadingNavX());
-        x += deltaX * Math.sin(getHeadingNavX()) + deltaY * Math.cos(getHeadingNavX());
+        y += deltaX * Math.sin(getHeadingNavX()) + deltaY * Math.cos(getHeadingNavX());
+        x += deltaX * Math.cos(getHeadingNavX()) + deltaY * Math.sin(getHeadingNavX());
 
         lastBR = currentBR;
         lastBL = currentBL;

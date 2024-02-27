@@ -67,7 +67,7 @@ public class PropDetector {
      */
     private VisionPortal visionPortal;
 
-    public PropDetector(HardwareMap hwMap, boolean isBlueAlliance) {
+    public PropDetector(HardwareMap hwMap) {
 
         this.hwMap = hwMap;
 
@@ -108,7 +108,7 @@ public class PropDetector {
 
     }
 
-    public Recognition getBestRecognitions() {
+    public Recognition getBestRecognition() {
 
         List<Recognition> currentRecognitions = tfod.getRecognitions();
 

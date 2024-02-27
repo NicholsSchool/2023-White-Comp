@@ -34,7 +34,7 @@ public class VisionAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        pd = new PropDetector(hardwareMap, true);
+        pd = new PropDetector(hardwareMap);
         dt = new DriveTrain(hardwareMap, 0, 0, 0);
         arm = new Arm(hardwareMap);
         hand = new Hand(hardwareMap);
@@ -47,7 +47,7 @@ public class VisionAuto extends LinearOpMode {
 
         while (opModeInInit()) {
 
-            bestRec = pd.getBestRecognitions();
+            bestRec = pd.getBestRecognition();
 
             telemetry.addData("DETECTING PROP...", detectTime.seconds());
             telemetry.update();

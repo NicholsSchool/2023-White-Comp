@@ -22,7 +22,7 @@ public class VisionTest extends OpMode {
     
     public void loop() {
 
-        Recognition bestRec = pd.getBestRecognitions();
+        Recognition bestRec = pd.getBestRecognition();
 
         if (bestRec == null) { return; }
 
