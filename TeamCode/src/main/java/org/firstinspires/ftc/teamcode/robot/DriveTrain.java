@@ -106,19 +106,31 @@ public class DriveTrain implements Constants{
         lastBL = currentBL;
 
     }
+    /**
+     * drives the bot to a position using lines 
+     * @param x x waypoint
+     * @param y y waypoint
+     * @param power drive power to get there 
+     * @param returnThreshold how far the bot should be before it starts slowing down, whileloop stops when it's 1 / 10th 
+     * @param endPower how fast it's moving at the end
+     */
+    public void driveToPosition(double x, double y, double power, double returnThreshold, double endPower, boolean highGear){
+        // makes x and y components for the drive vector 
+        double xComp, yComp;
+        double angle;
+        
+        //while the distance between the bot and target point is greater than the return threshold run the whileloop
+        while(Math.hypot((x - getX()), (y - getY())) > 0.1 * returnThreshold){
 
-    public void driveToPosition(double x, double y, double power, double returnThreshold){
+            xComp = x - getX();
+            yComp = y - getY();
 
-        while ( !((x - returnThreshold) < this.x && this.x < (x + returnThreshold) && (y - returnThreshold) < this.y && this.y < (y + returnThreshold))) {
-            updateWithOdometry();
-            double slope = (this.y - y) / (this.x - x); 
-            double angle = this.x < x ? Math.atan(slope) : Calculator.addAngles(Math.atan(slope), Math.PI);
-            drive(power, angle, 0, true);
+            angle = Math.atan2(yComp, xComp);
+            
+            drive(Range.clip(power * Math.hypot((x - getX()), (y - getY())) / returnThreshold ,endPower, power), angle, 0, highGear);
         }
-
-        drive(0, 0, 0, false);
-
-        return;
+        drive(0,0,0,false);
+       
     }
 
     public double getX(){
