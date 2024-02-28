@@ -54,10 +54,10 @@ public class Arm implements Constants{
         wrist.setPower(power * FB_POWER_MULT);
     }
     
-    public void setFourbarPos(int targetPos) {
+    public void setWristPos(int targetPos) {
         double error = targetPos - wristPos();
         timeout.reset();
-        while (Math.abs(error) > 15 && timeout.time() < 4){
+        while (Math.abs(error) > 15){
             error = targetPos - wristPos();
             wristPower(error * 0.008);
         }

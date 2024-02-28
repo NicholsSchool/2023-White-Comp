@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import android.content.res.AssetManager;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 import org.firstinspires.ftc.teamcode.robot.DriveTrain;
 
@@ -34,7 +35,7 @@ public class VectorPath {
      * 
      * @param KeyframeAssetName The filename of the Keyframe JSON File (ex. Keyframes.json)
      */
-    public VectorPath(HardwareMap hwMap, String KeyframeAssetName) {
+    public VectorPath(HardwareMap hwMap, String KeyframeAssetName, Telemetry telemetry) {
 
         AssetManager am = AppUtil.getDefContext().getAssets();
 
@@ -42,7 +43,7 @@ public class VectorPath {
 
         String input;
 
-        dt = new DriveTrain(hwMap, 0, 0, Math.PI/2);
+        dt = new DriveTrain(hwMap, 0, 0, Math.PI/2, telemetry);
 
         try {
 

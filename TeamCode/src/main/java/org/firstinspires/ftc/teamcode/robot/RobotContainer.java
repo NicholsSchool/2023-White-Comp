@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.controller.GameController;
 import org.firstinspires.ftc.teamcode.utils.Constants;
 
@@ -27,10 +28,11 @@ public class RobotContainer implements Constants {
      * @param g1          gamepad1
      * @param g2          gamepad2
      */
-    public RobotContainer(HardwareMap hwMap, Gamepad g1, Gamepad g2, boolean isRedAlliance) {
+    public RobotContainer(HardwareMap hwMap, Gamepad g1, Gamepad g2, boolean isRedAlliance, Telemetry telemetry) {
         drivetrain = new DriveTrain(hwMap, 0, 0 ,
         //isRedAlliance ? Math.PI/2 : -Math.PI / 2
-        0
+        0,
+        telemetry
         );
         hand = new Hand(hwMap);
         hand.clamp(true, true);

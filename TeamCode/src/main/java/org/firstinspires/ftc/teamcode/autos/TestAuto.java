@@ -16,9 +16,16 @@ public class TestAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         
-        ac = new AutoContainer(hardwareMap, Alliance.RED, FieldSide.AUDIENCE);
+        ac = new AutoContainer(hardwareMap, Alliance.RED, FieldSide.AUDIENCE, telemetry);
+
+        while (opModeInInit()) {
+            ac.getRecsLoop();
+        }
+
 
         waitForStart();
+
+        ac.getPropPos();
         
         ac.runAutoSequence();
 

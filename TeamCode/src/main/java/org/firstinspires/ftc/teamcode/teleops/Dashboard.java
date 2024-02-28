@@ -33,14 +33,14 @@ public class Dashboard extends OpMode implements Constants {
     public void init() {
         hand = new Hand(hardwareMap);
         arm = new Arm(hardwareMap);
-        dt = new DriveTrain(hardwareMap, 0, 0, 0);
+        dt = new DriveTrain(hardwareMap, 0, 0, 0, telemetry);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         driverOI = new GameController(gamepad1);
-        vecpath = new VectorPath(hardwareMap, "robot_oriented_test.json");
         dt.resetIMU();
     }
 
     public void start() {
+        dt.setFloat();
         // dt.driveToPosition(0, 50, 0.7, 1);
     }
 

@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 import com.kauailabs.navx.ftc.AHRS;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.utils.*;
 
 
@@ -20,15 +21,16 @@ public class DriveTrain implements Constants{
     public double x, y;
     private int lastBR, lastBL;
     private final double angleOffset;
+    private Telemetry telemetry;
 
 
-
-    public DriveTrain(HardwareMap hwMap, double startX, double startY, double angleOffset) {
+    public DriveTrain(HardwareMap hwMap, double startX, double startY, double angleOffset, Telemetry telemetry) {
 
         this.hwMap = hwMap;
         this.x = startX;
         this.y = startY;
         this.angleOffset = angleOffset;
+        this.telemetry = telemetry;
 
 
         frontLeft = hwMap.get(DcMotorEx.class, "frontLeft");
@@ -76,9 +78,9 @@ public class DriveTrain implements Constants{
     public void autoAlign(double desiredAngle){
         
         double alignError =  Calculator.addAngles(desiredAngle, -getHeadingNavX());
-        while (Math.abs(alignError) > 0.05) {
+        while (Math.abs(alignError) > 0.1) {
             alignError = Calculator.addAngles(desiredAngle, -getHeadingNavX());
-            drive(0,0,alignError * 0.5, false);
+            drive(0,0,alignError * 0.6 + 0.1, true);
         }
         drive(0, 0, 0, false);
 
@@ -110,13 +112,21 @@ public class DriveTrain implements Constants{
         double deltaY = deltaBL * ODOMETRY_X_CORRECTOR;
         double deltaX = deltaBR * ODOMETRY_Y_CORRECTOR;
 
-        y += deltaX * Math.sin(getHeadingNavX()) + deltaY * Math.cos(getHeadingNavX());
+        y += -deltaX * Math.sin(getHeadingNavX()) + deltaY * Math.cos(getHeadingNavX());
         x += deltaX * Math.cos(getHeadingNavX()) + deltaY * Math.sin(getHeadingNavX());
 
         lastBR = currentBR;
         lastBL = currentBL;
 
     }
+
+    public void setFloat() {
+        frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+    }
+
     /**
      * drives the bot to a position using lines 
      * @param x x waypoint
@@ -131,7 +141,9 @@ public class DriveTrain implements Constants{
         double angle;
         
         //while the distance between the bot and target point is greater than the return threshold run the whileloop
-        while(Math.hypot((x - getX()), (y - getY())) > 0.1 * returnThreshold){
+        while(Math.hypot((x - getX()), (y - getY())) > 0.2 * returnThreshold){
+
+            updateWithOdometry();
 
             xComp = x - getX();
             yComp = y - getY();
@@ -139,8 +151,17 @@ public class DriveTrain implements Constants{
             angle = Math.atan2(yComp, xComp);
             
             drive(Range.clip(power * Math.hypot((x - getX()), (y - getY())) / returnThreshold ,endPower, power), angle, 0, highGear);
+
+            telemetry.addData("x", getX());
+            telemetry.addData("y", getY());
+            telemetry.addData("power", Range.clip(power * Math.hypot((x - getX()), (y - getY())) / returnThreshold ,endPower, power));
+            telemetry.addData("angle", angle);
+            telemetry.addData("distance", Math.hypot((x - getX()), (y - getY())));
+            telemetry.update();
         }
         drive(0,0,0,false);
+
+        return;
        
     }
 

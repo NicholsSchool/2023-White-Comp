@@ -2,17 +2,20 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.utils.Constants;
 
 public class AutoContainer implements Constants {
-    private DriveTrain drivetrain;
+    private DriveTrain dt;
     private Arm arm;
     private Hand hand;
     private PropDetector pd;
     private Recognition propRec;
     private PropZone propZone;
     public double angleForTelemetry;
+    private Alliance alliance;
+    private FieldSide fieldSide;
 
     /**
      *
@@ -20,14 +23,16 @@ public class AutoContainer implements Constants {
      * @param g1          gamepad1
      * @param g2          gamepad2
      */
-    public AutoContainer(HardwareMap hwMap, Alliance alliance, FieldSide fieldSide) {
-        drivetrain = new DriveTrain(hwMap, 0, 0 ,
-        0
-        );
+    public AutoContainer(HardwareMap hwMap, Alliance alliance, FieldSide fieldSide, Telemetry telemetry) {
+        dt = new DriveTrain(hwMap, 0, 0 ,0, telemetry);
         hand = new Hand(hwMap);
         hand.clamp(true, true);
         pd = new PropDetector(hwMap);
         arm = new Arm(hwMap);  
+
+        this.alliance = alliance;
+        this.fieldSide = fieldSide;
+
     }
 
     public enum Alliance {
@@ -77,8 +82,81 @@ public class AutoContainer implements Constants {
 
     public void runAutoSequence() {
 
-        drivetrain.driveToPosition(0, 20, 0.7, 5, 0.1, false);
+        dt.driveToPosition(0, 18.6, 0.8, 3, 0.2, true);
 
+        arm.setArmPos(-140);
+
+        arm.setWristPos(143);
+
+        arm.setArmPos(847);
+
+        double propAngle;
+        switch (propZone) {
+            case LEFT:
+                propAngle = -0.55;
+                break;
+        
+            case RIGHT:
+                propAngle = 0.58;
+                break;
+            
+            default:
+                propAngle = 0.0;
+        }
+        dt.autoAlign(propAngle);
+
+        hand.clamp(false, false);
+
+        arm.setArmPos(0);
+
+        double parkX;
+
+        if (alliance == Alliance.BLUE) {
+
+            dt.autoAlign(0.5);
+            parkX = -45;
+
+        } else {
+            dt.autoAlign(-0.5);
+            parkX = 45;
+        }
+
+        if (fieldSide == FieldSide.BACKSTAGE) {
+
+            dt.driveToPosition(parkX, 6, 0.8, 3, 0.2, true);
+
+        }
+
+    }
+
+    /**
+     * Drives 20 in forward (ish)
+     */
+    public void testDriveToPos() {
+
+        dt.driveToPosition(0, 20, 0.8, 3, 0.2, true);
+
+    }
+
+    /**
+     * Aligns robot to 90deg clockwise from starting pos
+     */
+    public void testAutoAlign() {
+        dt.autoAlign(Math.PI / 2);
+    }
+
+    /**
+     * Raises arm 140 ticks
+     */
+    public void testArmGoToPos(){
+        arm.setArmPos(-140);
+    }
+
+    /**
+     * Raises wrist 50 ticks
+     */
+    public void testWristGoToPos() {
+        arm.setWristPos(50);
     }
 
 }

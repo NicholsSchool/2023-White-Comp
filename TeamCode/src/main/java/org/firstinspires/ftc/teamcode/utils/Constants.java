@@ -66,5 +66,6 @@ public interface Constants {
     double FB_POS_MULT = 0.08;
 
     double PPP_UP = 0.6;
+    
     double PPP_DROP = 0.0;
 }
