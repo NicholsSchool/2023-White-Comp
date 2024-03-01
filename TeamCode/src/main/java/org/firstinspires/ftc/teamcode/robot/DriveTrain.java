@@ -80,7 +80,10 @@ public class DriveTrain implements Constants{
         double alignError =  Calculator.addAngles(desiredAngle, -getHeadingNavX());
         while (Math.abs(alignError) > 0.1) {
             alignError = Calculator.addAngles(desiredAngle, -getHeadingNavX());
-            drive(0,0,alignError * 0.6 + 0.1, true);
+            drive(0,0,Range.clip(alignError * 2, -0.8, 0.8), true);
+            telemetry.addData("DT ANGLE", getHeadingNavX());
+            telemetry.addData("ALIGN ERROR", alignError);
+            telemetry.update();
         }
         drive(0, 0, 0, false);
 
@@ -103,6 +106,7 @@ public class DriveTrain implements Constants{
     }
 
     public void updateWithOdometry(){
+
         int currentBL = backLeft.getCurrentPosition();
         int currentBR = backRight.getCurrentPosition();
 
@@ -152,11 +156,11 @@ public class DriveTrain implements Constants{
             
             drive(Range.clip(power * Math.hypot((x - getX()), (y - getY())) / returnThreshold ,endPower, power), angle, 0, highGear);
 
-            telemetry.addData("x", getX());
-            telemetry.addData("y", getY());
-            telemetry.addData("power", Range.clip(power * Math.hypot((x - getX()), (y - getY())) / returnThreshold ,endPower, power));
-            telemetry.addData("angle", angle);
-            telemetry.addData("distance", Math.hypot((x - getX()), (y - getY())));
+            telemetry.addData("DT X", getX());
+            telemetry.addData("DT Y", getY());
+            telemetry.addData("DRIVE POWER", Range.clip(power * Math.hypot((x - getX()), (y - getY())) / returnThreshold ,endPower, power));
+            telemetry.addData("DRIVE ANGLE", angle);
+            telemetry.addData("DIST TO POS", Math.hypot((x - getX()), (y - getY())));
             telemetry.update();
         }
         drive(0,0,0,false);

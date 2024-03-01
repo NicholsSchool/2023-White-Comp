@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.autos;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -15,11 +17,11 @@ public class TestAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         ac = new AutoContainer(hardwareMap, Alliance.RED, FieldSide.AUDIENCE, telemetry);
 
         while (opModeInInit()) {
-            ac.getRecsLoop();
+             ac.getRecsLoop();
         }
 
 

@@ -28,7 +28,7 @@ public class AutoContainer implements Constants {
         hand = new Hand(hwMap);
         hand.clamp(true, true);
         pd = new PropDetector(hwMap);
-        arm = new Arm(hwMap);  
+        arm = new Arm(hwMap, telemetry);  
 
         this.alliance = alliance;
         this.fieldSide = fieldSide;
@@ -82,14 +82,16 @@ public class AutoContainer implements Constants {
 
     public void runAutoSequence() {
 
-        dt.driveToPosition(0, 18.6, 0.8, 3, 0.2, true);
+        dt.autoAlign(0);
 
-        arm.setArmPos(-140);
+        arm.setArmPos(-300);
+        
+        arm.setWristPos(144);
 
-        arm.setWristPos(143);
+        arm.setArmPos(1000);
 
-        arm.setArmPos(847);
-
+        dt.driveToPosition(0, 18.6, 1, 3, 0.2, true);
+        
         double propAngle;
         switch (propZone) {
             case LEFT:
@@ -123,7 +125,7 @@ public class AutoContainer implements Constants {
 
         if (fieldSide == FieldSide.BACKSTAGE) {
 
-            dt.driveToPosition(parkX, 6, 0.8, 3, 0.2, true);
+            dt.driveToPosition(parkX, 6, 1, 3, 0.2, true);
 
         }
 
@@ -146,17 +148,17 @@ public class AutoContainer implements Constants {
     }
 
     /**
-     * Raises arm 140 ticks
+     * Raises arm 500 ticks
      */
     public void testArmGoToPos(){
-        arm.setArmPos(-140);
+        arm.setArmPos(-500);
     }
 
     /**
-     * Raises wrist 50 ticks
+     * Raises wrist 75 ticks
      */
     public void testWristGoToPos() {
-        arm.setWristPos(50);
+        arm.setWristPos(75);
     }
 
 }

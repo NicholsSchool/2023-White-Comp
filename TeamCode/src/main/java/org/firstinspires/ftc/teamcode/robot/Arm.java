@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.utils.*;
 public class Arm implements Constants{
     public DcMotorEx leftArm, rightArm, wrist, winch;
@@ -13,10 +15,12 @@ public class Arm implements Constants{
     private ElapsedTime timeout = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
 
     HardwareMap hwMap;
+    Telemetry telemetry;
 
-    public Arm(HardwareMap ahwMap) {
+    public Arm(HardwareMap hwMap, Telemetry telemetry) {
 
-        hwMap = ahwMap;
+        this.hwMap = hwMap;
+        this.telemetry = telemetry;
 
         leftArm = hwMap.get(DcMotorEx.class, "leftArm");
         rightArm = hwMap.get(DcMotorEx.class, "rightArm");
@@ -57,9 +61,11 @@ public class Arm implements Constants{
     public void setWristPos(int targetPos) {
         double error = targetPos - wristPos();
         timeout.reset();
-        while (Math.abs(error) > 15){
+        while (Math.abs(error) > 5){
             error = targetPos - wristPos();
-            wristPower(error * 0.008);
+            wristPower(Range.clip(error, -1, 1));
+            telemetry.addData("WRIST POS", wristPos());
+            telemetry.update();
         }
         wristPower(0);
         
@@ -69,13 +75,15 @@ public class Arm implements Constants{
         double error = targetPos - armPos();
         while (Math.abs(error) > 15){
             error = targetPos - armPos();
-            setPower(error * -0.001);
+            setPower(error * -0.5);
+            telemetry.addData("ARM POS", armPos());
+            telemetry.update();
         }
         setPower(0);
     }
 
     public int armPos() {
-        return rightArm.getCurrentPosition();
+        return leftArm.getCurrentPosition();
     }
 
     public int wristPos() {

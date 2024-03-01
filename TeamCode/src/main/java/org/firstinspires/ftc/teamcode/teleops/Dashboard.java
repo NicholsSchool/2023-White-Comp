@@ -32,7 +32,7 @@ public class Dashboard extends OpMode implements Constants {
     @Override
     public void init() {
         hand = new Hand(hardwareMap);
-        arm = new Arm(hardwareMap);
+        arm = new Arm(hardwareMap, telemetry);
         dt = new DriveTrain(hardwareMap, 0, 0, 0, telemetry);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         driverOI = new GameController(gamepad1);

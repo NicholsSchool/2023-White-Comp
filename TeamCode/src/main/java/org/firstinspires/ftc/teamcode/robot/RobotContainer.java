@@ -29,14 +29,10 @@ public class RobotContainer implements Constants {
      * @param g2          gamepad2
      */
     public RobotContainer(HardwareMap hwMap, Gamepad g1, Gamepad g2, boolean isRedAlliance, Telemetry telemetry) {
-        drivetrain = new DriveTrain(hwMap, 0, 0 ,
-        //isRedAlliance ? Math.PI/2 : -Math.PI / 2
-        0,
-        telemetry
-        );
+        drivetrain = new DriveTrain(hwMap, 0, 0, 0, telemetry);
         hand = new Hand(hwMap);
         hand.clamp(true, true);
-        arm = new Arm(hwMap);
+        arm = new Arm(hwMap, telemetry);
         power = 0.0;
         angle = 0.0;
         turn = 0.0;
