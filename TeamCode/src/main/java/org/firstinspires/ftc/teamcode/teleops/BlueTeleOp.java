@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.utils.Constants;
 /**
  * Blue Teleop
  */
-@TeleOp(name = "Teleop")
-public class Teleop extends OpMode implements Constants {
+@TeleOp(name = "Blue Teleop", group = "CompTele")
+public class BlueTeleOp extends OpMode implements Constants {
     private RobotContainer robotContainer;
 
     /*
@@ -18,7 +18,7 @@ public class Teleop extends OpMode implements Constants {
      */
     @Override
     public void init() {
-        robotContainer = new RobotContainer(hardwareMap, gamepad1, gamepad2, false, telemetry);
+        robotContainer = new RobotContainer(hardwareMap, gamepad1, gamepad2, -Math.PI / 2, telemetry);
     }
 
     /*

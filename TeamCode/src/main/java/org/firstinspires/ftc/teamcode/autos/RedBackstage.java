@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.robot.AutoContainer;
 import org.firstinspires.ftc.teamcode.robot.AutoContainer.Alliance;
 import org.firstinspires.ftc.teamcode.robot.AutoContainer.FieldSide;
 
-@Autonomous(name="Test Auto", group="TestAutos")
-public class TestAuto extends LinearOpMode {
+@Autonomous(name="Auto - Red/Backstage", group = "CompAutos")
+public class RedBackstage extends LinearOpMode {
 
     // Declare OpMode members.
     private AutoContainer ac;
@@ -18,7 +18,7 @@ public class TestAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        ac = new AutoContainer(hardwareMap, Alliance.BLUE, FieldSide.BACKSTAGE, telemetry);
+        ac = new AutoContainer(hardwareMap, Alliance.RED, FieldSide.BACKSTAGE, telemetry);
 
         while (opModeInInit()) {
              ac.getRecsLoop();
@@ -29,7 +29,7 @@ public class TestAuto extends LinearOpMode {
 
         ac.getPropPos();
         
-        ac.testDriveToPos();
+        ac.runAutoSequence();
 
     }
 }

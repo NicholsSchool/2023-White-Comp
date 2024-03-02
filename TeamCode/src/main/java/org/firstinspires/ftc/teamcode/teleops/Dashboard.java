@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.utils.VectorPath;
  * FTC Dashboard
  */
 @Config
-@TeleOp(name="[DASHBOARD] DevTesting")
+@TeleOp(name="[DASHBOARD] DevTesting", group = "Develop")
 public class Dashboard extends OpMode implements Constants {
     public DriveTrain dt;
     public Arm arm;

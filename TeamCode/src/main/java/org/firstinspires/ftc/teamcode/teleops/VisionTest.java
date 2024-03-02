@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-@TeleOp(name="TeleopToTestTheTensorflowTemporalTrackingTelemetryTheoryToTelepathicallyTechnicateTheTelecommunication")
+@TeleOp(name="Vision Testing", group = "Develop")
 @Disabled
 public class VisionTest extends OpMode {
 
@@ -25,8 +25,7 @@ public class VisionTest extends OpMode {
         Recognition bestRec = pd.getBestRecognition();
 
         if (bestRec == null) { return; }
-
-        telemetry.addLine("THIS AINT WORKIN!!!");
+        
         telemetry.addData("> PREDICTION CONFIDENCE", bestRec.getConfidence());
         telemetry.addData("> LABEL", bestRec.getLabel());
 

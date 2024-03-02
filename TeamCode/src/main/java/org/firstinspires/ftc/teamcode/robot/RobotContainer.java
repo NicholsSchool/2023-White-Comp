@@ -28,8 +28,8 @@ public class RobotContainer implements Constants {
      * @param g1          gamepad1
      * @param g2          gamepad2
      */
-    public RobotContainer(HardwareMap hwMap, Gamepad g1, Gamepad g2, boolean isRedAlliance, Telemetry telemetry) {
-        drivetrain = new DriveTrain(hwMap, 0, 0, 0, telemetry);
+    public RobotContainer(HardwareMap hwMap, Gamepad g1, Gamepad g2, double angleOffset, Telemetry telemetry) {
+        drivetrain = new DriveTrain(hwMap, 0, 0, angleOffset, telemetry);
         hand = new Hand(hwMap);
         hand.clamp(true, true);
         arm = new Arm(hwMap, telemetry);
@@ -60,17 +60,17 @@ public class RobotContainer implements Constants {
 
         power = driverOI.leftStickRadius();
         angle = driverOI.leftStickTheta();
-        angleForTelemetry = angle;
         turn = driverOI.right_stick_x.get();
         armPower = operatorOI.left_stick_y.get();
         extendPower = operatorOI.right_trigger.get() - operatorOI.left_trigger.get();
-
         highGear = (driverOI.right_trigger.get() > 0.5) ? true : false;
+
         drivetrain.drive(power, angle, turn, highGear);
 
         arm.setPower(armPower);
+
         arm.extendWinch(-extendPower);
-        //arm.fourbarUpdate(-400);
+
         arm.wristPower(operatorOI.right_stick_y.get());
         if (operatorOI.x.wasJustReleased()) {
             leftClamped = !leftClamped;
