@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.ElapsedTime.Resolution;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.ElapsedTime.Resolution;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -69,7 +67,15 @@ public class AutoContainer implements Constants {
      * To be called during init loop
      */
     public void getRecsLoop() {
+
+        hand.clamp(true, true);
         propRec = pd.getBestRecognition();
+
+        if (propRec != null) {
+            telemetry.addLine("PROP DETECTED");
+            telemetry.addData("Location:", (propRec.getLeft() + propRec.getRight()) / 2);
+            telemetry.update();
+        }
     }
 
     /**
@@ -96,20 +102,20 @@ public class AutoContainer implements Constants {
 
         arm.setArmPos(-350);
         
-        arm.setWristPos(144);
+        arm.setWristPos(149);
 
         wait(1);
 
-        dt.driveToPosition(0, 18.6, 1, 3, 0.4, true);
+        dt.driveToPosition(0, (propZone == PropZone.CENTER) ? 20.0 : 19.0, 1, 3, 0.4, true);
         
         double propAngle;
         switch (propZone) {
             case LEFT:
-                propAngle = -0.55;
+                propAngle = -0.575;
                 break;
         
             case RIGHT:
-                propAngle = 0.58;
+                propAngle = 0.80;
                 break;
             
             default:
@@ -119,9 +125,11 @@ public class AutoContainer implements Constants {
         wait(1);
 
         // Aligns to one side of the prop before putting the arm down
-        dt.autoAlign(propAngle != 0.0 ? propAngle / 2 : 0.1);
+        dt.autoAlign(propAngle != 0.0 ? 0.0 : 0.3);
 
-        arm.setArmPos(850);
+        arm.setWristPos(149);
+
+        arm.setArmPos(1030);
 
         wait(1);
 
@@ -131,16 +139,21 @@ public class AutoContainer implements Constants {
 
         wait(1);
 
-        arm.setArmPos(0);
+        arm.setArmPos(-350);
+
+        dt.autoAlign(0);
+
+        hand.clamp(true, true);
 
         double parkX;
+        double parkAngle;
         if (alliance == Alliance.BLUE) {
 
-            dt.autoAlign(Math.PI / 2);
+            parkAngle = Math.PI / 4;
             parkX = -45;
 
         } else {
-            dt.autoAlign(-Math.PI / 2);
+            parkAngle = -Math.PI / 4;
             parkX = 45;
         }
 
@@ -148,9 +161,19 @@ public class AutoContainer implements Constants {
 
             dt.driveToPosition(0, 6, 1, 3, 0.4, false);
 
-            dt.driveToPosition(parkX, 6, 1, 3, 0.4, true);
+            dt.autoAlign(parkAngle);
+
+            dt.driveToPosition(parkX, 2, 1, 3, 0.4, true);
+
+            dt.autoAlign(parkAngle);
+
+        } else {
+
+            dt.autoAlign(parkAngle);
 
         }
+
+        dt.autoAlign(parkAngle);
 
     }
 

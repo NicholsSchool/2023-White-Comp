@@ -35,6 +35,8 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import android.util.Size;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,6 +100,8 @@ public class PropDetector {
         builder.enableLiveView(true);
 
         builder.addProcessor(tfod);
+
+        builder.setCameraResolution(new Size(1920, 1080));
 
         visionPortal = builder.build();
     }
