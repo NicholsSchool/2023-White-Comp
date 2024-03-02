@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.robot.AutoContainer;
 import org.firstinspires.ftc.teamcode.robot.AutoContainer.Alliance;
 import org.firstinspires.ftc.teamcode.robot.AutoContainer.FieldSide;
 
-@Autonomous(name="Test Auto", group="TestAutos")
-public class TestAuto extends LinearOpMode {
+@Autonomous(name="Auto - Blue/Backstage", group = "CompAutos")
+public class BlueBackstage extends LinearOpMode {
 
     // Declare OpMode members.
     private AutoContainer ac;
@@ -29,7 +29,7 @@ public class TestAuto extends LinearOpMode {
 
         ac.getPropPos();
         
-        ac.testDriveToPos();
+        ac.runAutoSequence();
 
     }
 }

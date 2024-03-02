@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.ElapsedTime.Resolution;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -16,6 +18,8 @@ public class AutoContainer implements Constants {
     public double angleForTelemetry;
     private Alliance alliance;
     private FieldSide fieldSide;
+    private Telemetry telemetry;
+    ElapsedTime waitTime = new ElapsedTime(Resolution.SECONDS);
 
     /**
      *
@@ -29,6 +33,8 @@ public class AutoContainer implements Constants {
         hand.clamp(true, true);
         pd = new PropDetector(hwMap);
         arm = new Arm(hwMap, telemetry);  
+
+        this.telemetry = telemetry;
 
         this.alliance = alliance;
         this.fieldSide = fieldSide;
@@ -69,14 +75,16 @@ public class AutoContainer implements Constants {
      */
     public void getPropPos() {
         try {
-            int point = (int) ((propRec.getLeft() + propRec.getRight()) / 2);
-            if (point < 250) {
+            int pointX = (int) ((propRec.getLeft() + propRec.getRight()) / 2);
+            if (pointX < 640) {
+                propZone = PropZone.LEFT;
+            } else if (pointX < 1280) {
                 propZone = PropZone.CENTER;
             } else {
                 propZone = PropZone.RIGHT;
             }
         } catch (NullPointerException e) {
-            propZone = PropZone.LEFT;
+            propZone = PropZone.CENTER;
         }
     }
 
@@ -84,13 +92,13 @@ public class AutoContainer implements Constants {
 
         dt.autoAlign(0);
 
-        arm.setArmPos(-300);
+        arm.setArmPos(-350);
         
         arm.setWristPos(144);
 
-        arm.setArmPos(1000);
+        wait(1);
 
-        dt.driveToPosition(0, 18.6, 1, 3, 0.2, true);
+        dt.driveToPosition(0, 18.6, 1, 3, 0.4, true);
         
         double propAngle;
         switch (propZone) {
@@ -105,28 +113,61 @@ public class AutoContainer implements Constants {
             default:
                 propAngle = 0.0;
         }
+
+        wait(1);
+
+        // Aligns to one side of the prop before putting the arm down
+        dt.autoAlign(propAngle == 0.0 ? propAngle / 2 : 0.1);
+
+        arm.setArmPos(850);
+
+        wait(1);
+
         dt.autoAlign(propAngle);
 
         hand.clamp(false, false);
 
+        wait(1);
+
         arm.setArmPos(0);
 
         double parkX;
-
         if (alliance == Alliance.BLUE) {
 
-            dt.autoAlign(0.5);
+            dt.autoAlign(Math.PI / 2);
             parkX = -45;
 
         } else {
-            dt.autoAlign(-0.5);
+            dt.autoAlign(-Math.PI / 2);
             parkX = 45;
         }
 
         if (fieldSide == FieldSide.BACKSTAGE) {
 
-            dt.driveToPosition(parkX, 6, 1, 3, 0.2, true);
+            dt.driveToPosition(0, 6, 1, 3, 0.4, false);
 
+            dt.driveToPosition(parkX, 6, 1, 3, 0.4, true);
+
+        }
+
+    }
+
+
+    // For some reason elapsed time throws exceptions but not really
+    private void waitLogic(double seconds) {
+        waitTime.reset();
+            while (waitTime.time() < seconds) {
+                telemetry.addData("WAITING", waitTime.time());
+                telemetry.update();
+        }
+    }
+
+    private void wait(int seconds) {
+
+        try {
+            waitLogic((int) seconds);
+        } catch (Exception e) {
+            // do nothing
         }
 
     }

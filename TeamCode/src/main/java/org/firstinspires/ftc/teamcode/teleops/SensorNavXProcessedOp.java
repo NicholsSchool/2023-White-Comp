@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.text.DecimalFormat;
 
-@TeleOp(name = "navX Testing")
+@TeleOp(name = "navX Testing", group = "Develop")
 // @Disabled Comment this in to remove this from the Driver Station OpMode List
 public class SensorNavXProcessedOp extends OpMode {
 
